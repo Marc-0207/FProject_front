@@ -1,11 +1,14 @@
 import  Welcome  from './components/Auth/Welcome'
+import Sidebar from './components/Sidebar/Sidebar'
+import { useState } from 'react'
 import './App.css'
 
 function App() {
-
-  return (
+   const [isOpen, setIsOpen] = useState(true);
+  return ( 
     <>
-     <Welcome />
+      <Sidebar isOpen={isOpen} setIsOpen={setIsOpen} />
+      <Welcome />
     </>
   )
 }

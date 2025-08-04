@@ -1,0 +1,61 @@
+/* Estilos generales del contenedor */
+.sidebar {
+  width: 250px;
+  background-color: #f4f4f4;
+  padding: 1rem;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Estilo para cuando la barra está cerrada (opcional si usas clases condicionales) */
+.sidebar.closed {
+  transform: translateX(-100%);
+}
+
+/* Título */
+.sidebar h1 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+/* Botón para abrir/cerrar */
+.sidebar button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+/* Navegación */
+.Opciones {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* Cada ítem del menú */
+.Opciones div {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.2s ease-in-out;
+}
+
+.Opciones div:hover {
+  background-color: #e0e0e0;
+}
+
+/* Icono del ítem */
+.Opciones svg {
+  margin-right: 0.5rem;
+}
+
+/* Dropdown (si hay) */
+.dropdown {
+  margin-left: 1.5rem;
+  font-size: 0.9rem;
+  color: #555;
+}
