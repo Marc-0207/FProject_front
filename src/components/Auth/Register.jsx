@@ -1,4 +1,5 @@
 
-export function Register(){
+function Register(){
 
 }
+export default Register

@@ -1,4 +1,5 @@
 
-export function Notificaciones(){
+function Notificaciones(){
 
 }
+export default Notificaciones

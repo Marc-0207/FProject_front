@@ -1,4 +1,6 @@
 
-export function Calendario(){
+function Calendario(){
 
 }
+
+export default Calendario

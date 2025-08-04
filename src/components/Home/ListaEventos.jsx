@@ -1,4 +1,5 @@
 
-export function ListaEventos(){
+function ListaEventos(){
 
 }
+export default ListaEventos

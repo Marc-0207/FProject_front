@@ -1,4 +1,5 @@
 
-export function EditarPerfil(){
+function EditarPerfil(){
 
 }
+export default EditarPerfil
