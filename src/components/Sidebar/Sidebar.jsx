@@ -1,7 +1,15 @@
-import { Link } from 'react-router-dom';
-import { calendario, notificacion, eventos, ajustes, desplegable, menu, cerrar } from '../SVG';
-import './Sidebar.css';
-import { useState } from 'react';
+import { Link } from "react-router-dom";
+import {
+  calendario,
+  notificacion,
+  eventos,
+  ajustes,
+  desplegable,
+  menu,
+  cerrar,
+} from "../SVG";
+import "./Sidebar.css";
+import { useState } from "react";
 
 const Sidebar = ({ isOpen, setIsOpen }) => {
   const [activeDropdown, setActiveDropdown] = useState(null);
@@ -13,15 +21,29 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
   };
 
   const navItems = [
-    { title: 'Mis eventos', path: '/listaeventos', icon: eventos, hasDropdown: false },
-    { title: 'Calendario', path: '/calendario', icon: calendario, hasDropdown: false },
-    { title: 'Notificaciones', path: '/notificaciones', icon: notificacion, hasDropdown: false },
-    { title: 'Ajustes', icon: ajustes, hasDropdown: true, dropdownItems: ['Modo oscuro']},
+    { title: "Mis eventos", path: "/home", icon: eventos, hasDropdown: false },
+    {
+      title: "Calendario",
+      path: "/calendario",
+      icon: calendario,
+      hasDropdown: false,
+    },
+    {
+      title: "Notificaciones",
+      path: "/notificaciones",
+      icon: notificacion,
+      hasDropdown: false,
+    },
+    {
+      title: "Ajustes",
+      icon: ajustes,
+      hasDropdown: true,
+      dropdownItems: ["Modo oscuro"],
+    },
   ];
 
   return (
-    <div className={`sidebar ${isOpen ? '' : 'closed'}`}>
-
+    <div className={`sidebar ${isOpen ? "" : "closed"}`}>
       <button onClick={() => setIsOpen(!isOpen)}>
         {isOpen ? cerrar : menu}
       </button>
@@ -36,7 +58,10 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
               </Link>
             ) : (
               <>
-                <div className="menu-item" onClick={() => toggleDropdown(index)}>
+                <div
+                  className="menu-item"
+                  onClick={() => toggleDropdown(index)}
+                >
                   {item.icon}
                   <span>{item.title}</span>
                   {desplegable}
@@ -47,7 +72,11 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
                       <div key={i}>
                         {subItem}
                         <label className="switch">
-                          <input type="checkbox" checked={isOn} onChange={toggleSwitch} />
+                          <input
+                            type="checkbox"
+                            checked={isOn}
+                            onChange={toggleSwitch}
+                          />
                           <span className="slider"></span>
                         </label>
                       </div>
