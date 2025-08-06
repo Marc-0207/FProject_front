@@ -7,6 +7,7 @@ function Login(){
                 <input className="Email" placeholder="Email"></input>
                 <input className="Password" placeholder="Password"></input>
                 <button className="Login">Login</button>
+                <p className='forgot'>Forgot password?</p>
             </div>
         </>
     )
