@@ -21,7 +21,11 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
   };
 
   const navItems = [
-    { title: "Mis eventos", path: "/home", icon: eventos, hasDropdown: false },
+    { title: "Mis eventos",
+      path: "/", 
+      icon: eventos,
+      hasDropdown: false, 
+    },
     {
       title: "Calendario",
       path: "/calendario",
