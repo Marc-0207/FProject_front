@@ -1,4 +1,5 @@
 
-export function CrearEvento(){
+function CrearEvento(){
 
 }
+export default CrearEvento;

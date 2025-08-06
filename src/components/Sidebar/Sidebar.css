@@ -5,11 +5,13 @@
   padding: 1rem;
   box-shadow: 2px 0 5px rgba(0,0,0,0.1);
   transition: transform 0.3s ease-in-out;
+  transform: translateX(-150%);
 }
 
-/* Estilo para cuando la barra está cerrada (opcional si usas clases condicionales) */
+/* Estilo para cuando la barra está cerrada */
 .sidebar.closed {
-  transform: translateX(-100%);
+  transform: translateY(-20%) translateX(-150%);
+  
 }
 
 /* Título */
@@ -35,27 +37,101 @@
 }
 
 /* Cada ítem del menú */
-.Opciones div {
+.menu-item {
   display: flex;
   align-items: center;
   padding: 0.5rem;
   cursor: pointer;
   border-radius: 4px;
   transition: background 0.2s ease-in-out;
+  color: inherit;
+  text-decoration: none;
 }
 
-.Opciones div:hover {
+.menu-item:hover {
   background-color: #e0e0e0;
 }
 
 /* Icono del ítem */
-.Opciones svg {
+.menu-item svg {
   margin-right: 0.5rem;
 }
 
-/* Dropdown (si hay) */
+/* Contenedor relativo del dropdown */
+.dropdown-container {
+  position: relative;
+}
+
+/* Dropdown hacia abajo */
 .dropdown {
-  margin-left: 1.5rem;
+  position: absolute;
+  top: 100%;   /* justo debajo del elemento padre */
+  left: 0;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 0.5rem;
+  width: max-content;
+  z-index: 10;
+  transform-origin: top center;
+  animation: dropdownDown 0.3s ease-out;
   font-size: 0.9rem;
   color: #555;
+}
+
+/* Animación para desplegable hacia abajo */
+@keyframes dropdownDown {
+  from {
+    opacity: 0;
+    transform: scaleY(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+}
+
+/* Switch de modo oscuro */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+  margin-left: 0.5rem;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+  border-radius: 24px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #4caf50;
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
 }
