@@ -1,0 +1,42 @@
+img{
+  width: 300px;
+  background-color: red;
+  height: 200px;
+  margin: 0;
+  display: block;
+}
+h1{
+  font-size: 3rem!important;
+  margin-bottom: 70px;
+}
+.auth-buttons{
+  display: flex;
+  margin: 0 120px;
+  justify-content: space-between;
+}
+
+.auth-buttons a{
+display: block;
+padding: 10px 20px;
+border: 2px black solid;
+border-radius: 8px;
+}
+
+.features{
+  display: flex;
+  flex-direction: column;
+  gap: 100px;
+  margin-top: 100px;
+}
+.features>div{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+}
+.features>div:nth-child(odd){
+  flex-direction: row;
+}
+.features>div:nth-child(even) {
+  flex-direction: row-reverse;
+}
