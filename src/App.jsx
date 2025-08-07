@@ -5,10 +5,10 @@ import './App.css'
 
 function App() {
    const [isOpen, setIsOpen] = useState(true);
-   // <Sidebar isOpen={isOpen} setIsOpen={setIsOpen} />
   return (
     <>
       <div>
+        <Sidebar isOpen={isOpen} setIsOpen={setIsOpen} />
         <Outlet />
       </div>
     </>
