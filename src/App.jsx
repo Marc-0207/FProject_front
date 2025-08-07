@@ -2,15 +2,18 @@ import Sidebar from './components/Sidebar/Sidebar'
 import { Outlet } from "react-router-dom";
 import { useState } from 'react'
 import './App.css'
+import Footer from './components/Footer/Footer';
 
 function App() {
    const [isOpen, setIsOpen] = useState(true);
   return (
     <>
-      <Sidebar isOpen={isOpen} setIsOpen={setIsOpen} />
+      {//<Sidebar isOpen={isOpen} setIsOpen={setIsOpen} />
+      }
       <div>
         <Outlet />
       </div>
+      <Footer/>
     </>
   );
 }
