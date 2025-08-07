@@ -1,0 +1,120 @@
+.FormContainer {
+  max-width: 700px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  box-sizing: border-box;
+}
+
+/* Contenedor para cada columna */
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Etiquetas */
+.FormContainer p {
+  margin: 0;
+  font-weight: 600;
+  color: #333;
+  font-size: 1rem;
+}
+
+/* Inputs y textarea */
+.Nombre,
+.Duracion,
+.Calendario,
+.Hora,
+textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+  transition: border-color 0.3s ease;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+/* Focus en inputs y textarea */
+.Nombre:focus,
+.Duracion:focus,
+.Calendario:focus,
+.Hora:focus,
+textarea:focus {
+  border-color: #2196f3;
+  box-shadow: 0 0 5px rgba(33, 150, 243, 0.5);
+}
+
+/* Botón crear evento */
+.CrearEvento {
+  display: block;
+  width: 100%;
+  max-width: 700px;
+  margin: 1.5rem auto 2rem;
+  padding: 0.85rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: white;
+  background-color: #2196f3;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 3px 8px rgba(33, 150, 243, 0.4);
+}
+
+.CrearEvento:hover {
+  background-color: #1976d2;
+}
+
+/* Responsive para pantallas pequeñas */
+@media (max-width: 700px) {
+  .FormContainer {
+    display: flex;
+    flex-direction: column;
+  }
+  .CrearEvento {
+    max-width: 90%;
+  }
+}
+
+/* Imagen centrada */
+.ImagenContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1.5rem 0;
+}
+
+/* Círculo vacío antes de subir imagen */
+.PlaceholderCircle {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background-color: #f0f0f0;
+  border: 2px dashed #ccc;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+/* Imagen circular una vez cargada */
+.PreviewImage {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}

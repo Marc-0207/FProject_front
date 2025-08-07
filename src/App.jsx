@@ -5,9 +5,9 @@ import './App.css'
 
 function App() {
    const [isOpen, setIsOpen] = useState(true);
+   // <Sidebar isOpen={isOpen} setIsOpen={setIsOpen} />
   return (
     <>
-      <Sidebar isOpen={isOpen} setIsOpen={setIsOpen} />
       <div>
         <Outlet />
       </div>
