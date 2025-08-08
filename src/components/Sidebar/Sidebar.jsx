@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   calendario,
   notificacion,
@@ -7,11 +8,17 @@ import {
   desplegable,
   menu,
   cerrar,
+  logout,
 } from "../SVG";
 import "./Sidebar.css";
 import { useState } from "react";
 
 const Sidebar = ({ isOpen, setIsOpen }) => {
+
+  let naviget = useNavigate();
+  function logoutSubmit(){
+    naviget("/welcome"); 
+  }
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [isOn, setIsOn] = useState(false);
 
@@ -44,6 +51,10 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
       hasDropdown: true,
       dropdownItems: ["Modo oscuro"],
     },
+    {
+      title: "Logout",
+      icon: logout,
+    }
   ];
 
   return (
@@ -55,7 +66,12 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
       <nav className="Opciones">
         {navItems.map((item, index) => (
           <div key={item.title} className="dropdown-container">
-            {!item.hasDropdown ? (
+            {item.title === "Logout" ? (
+              <div className="menu-item logout-item" onClick={logoutSubmit} style={{ cursor: "pointer" }}>
+                {item.icon}
+                <span>{item.title}</span>
+              </div>
+            ) : !item.hasDropdown ? (
               <Link to={item.path} className="menu-item">
                 {item.icon}
                 <span>{item.title}</span>
