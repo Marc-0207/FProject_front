@@ -10,11 +10,7 @@ function App() {
   return (
     <>
       <Header/>
-      {//<Sidebar isOpen={isOpen} setIsOpen={setIsOpen} />
-      }
-      <div>
         <Outlet />
-      </div>
       <Footer/>
     </>
   );

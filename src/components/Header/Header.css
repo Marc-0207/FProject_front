@@ -7,9 +7,14 @@ header{
   border-bottom: 2px solid black;
   height: 50px;
   width: 100%;
+  padding: 8px 25px;
+  box-sizing: border-box;
+  background-color: white;
 }
 .perfil{  
-  margin-right: 25px;
   display: flex;
   align-items: center;
+}
+.menu-logo{
+  display: flex;
 }
