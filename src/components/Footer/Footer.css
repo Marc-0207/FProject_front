@@ -1,0 +1,46 @@
+.footer{
+  width: 100%;
+  padding: 30px 40px;
+  display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+  background-color: gainsboro;
+  box-sizing: border-box;
+  position: absolute;
+  bottom: 0;
+  justify-content: space-between;
+  align-items: center;
+}
+.footer-links{
+display: flex;
+flex-direction: column;
+text-align: end;
+margin-right: 25px;
+width: fit-content;
+}
+.logo-footer{
+  height: 100px;
+  width: fit-content;
+  text-align: center;
+}
+h4{
+  margin: 0;
+
+}
+.footer div:nth-child(2){
+  justify-content: center;
+  display: flex;
+  margin: 0;
+  flex-direction: row;
+}
+.footer a:hover{
+  color: whitesmoke;
+  transition: color 0.1s ease;
+}
+.footer a{
+  color: black;
+}
+.footer-links-container{
+  display: flex;
+  justify-content: end;
+  width: 100%;
+}
