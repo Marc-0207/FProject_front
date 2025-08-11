@@ -9,9 +9,11 @@ function App() {
    
   return (
     <>
-      <Header/>
+      <Header />
+      <div id='page-container'>
         <Outlet />
-      <Footer/>
+      </div>
+      <Footer />
     </>
   );
 }
