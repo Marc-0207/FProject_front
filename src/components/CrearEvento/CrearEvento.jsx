@@ -46,10 +46,9 @@ function CrearEvento() {
           <div className="column">
             <p>Nombre del evento</p>
             <input className="Nombre" placeholder="Nombre" />
-            <p>Duración del evento</p>
-            <input className="Duracion" placeholder="Duración" />
           </div>
           <div className="column">
+            {/*Añadir opción para añadir fechas */}
             <p>Fecha inicio</p>
             <input className="Calendario" type="date" />
             <p>Descripción</p>

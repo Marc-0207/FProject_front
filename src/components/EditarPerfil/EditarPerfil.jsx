@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import './EditarPerfil.css';
 
+//Acabar de cambiar los inputs de nombre y contraseña
 function EditarPerfil() {
   const [files, setFiles] = useState();
   const [preview, setPreview] = useState();
