@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import './Login.css'
 import { useNavigate } from 'react-router-dom';
+import { ojoabierto, ojocerrado} from "../SVG";
 function Login(){
 
+    const [showPassword, setShowPassword] = useState(false);
     const naviget = useNavigate();
     const [email, setUser] = useState("");
     const [password, setPass] = useState("")
@@ -73,7 +75,10 @@ function Login(){
                     }
                 </p>
                 <input className="Email" placeholder="Email" value={email} onChange={(e) => handleInputChange(e, "email")}></input>
-                <input className="Password" placeholder="Password" value={password} onChange={(e) => handleInputChange(e, "password")}></input>
+                <div className="PasswordField">
+                    <input className="Password" placeholder="Password" type={showPassword ? "text" : "password"} value={password} onChange={(e) => handleInputChange(e, "password")}/>
+                    <span className="TogglePassword" onClick={() => setShowPassword(!showPassword)}>{showPassword ? ojoabierto : ojocerrado}</span>
+                </div>
                 <button className="Login" onClick={loginSubmit}>Login</button>
                 <p className='forgot'>Forgot password?</p>
             </div>

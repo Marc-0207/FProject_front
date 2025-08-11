@@ -22,24 +22,50 @@ h1 {
   color: #333;
 }
 
-/* Inputs */
+/* Campos de entrada */
 .Name,
 .Email,
-.Password2,
-.Password {
+.Password,
+.Password2 {
   width: 100%;
   padding: 0.75rem;
+  padding-right: 2.5rem; /* Espacio para el icono 👁 */
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 1rem;
   outline: none;
   transition: border-color 0.3s ease;
+  box-sizing: border-box;
 }
 
 .Name:focus,
 .Email:focus,
-.Password:focus {
+.Password:focus,
+.Password2:focus {
   border-color: #2196f3;
+}
+
+/* Contenedor individual para campos de contraseña con ícono */
+.PasswordField {
+  position: relative;
+  width: 100%;
+}
+
+/* Icono de mostrar/ocultar contraseña */
+.TogglePassword {
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 1.25rem;
+  color: #666;
+  user-select: none;
+  transition: color 0.2s ease;
+}
+
+.TogglePassword:hover {
+  color: #2196f3;
 }
 
 /* Botón */
@@ -58,8 +84,8 @@ h1 {
 .Register:hover {
   background-color: #1976d2;
 }
-button:disabled {
-  opacity: 0.5;        /* Se ve medio opaco */
-  cursor: not-allowed; /* Muestra el cursor de "no permitido" */
-}
 
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

@@ -1,129 +1,158 @@
 import './Register.css';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import { ojoabierto, ojocerrado } from "../SVG";
 
 function Register() {
-    const navigate = useNavigate(); 
-    const [registroActivar, setRegistroActivar] = useState(true);
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [password2, setPassword2] = useState("");
-    const [error, setError] = useState("");
-    const [msg, setMsg] = useState("");
 
-    const forbiddenSymbols = [";", "?", "\\", " or ", " and "]; 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword2, setShowPassword2] = useState(false); // 👈 Segundo estado
+  const navigate = useNavigate();
 
-    useEffect(() => {
-        const timer = setTimeout(() => setMsg(""), 15000);
-        return () => clearTimeout(timer);
-    }, []);
+  const [registroActivar, setRegistroActivar] = useState(true);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [password2, setPassword2] = useState("");
+  const [error, setError] = useState("");
+  const [msg, setMsg] = useState("");
 
-    const handleInputChange = (e, type) => {
-        const value = e.target.value;
-        setError("");
+  const forbiddenSymbols = [";", "?", "\\", " or ", " and "];
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-        switch (type) {
-            case "name": setName(value); break;
-            case "email": setEmail(value); break;
-            case "password": setPassword(value); break;
-            case "password2": setPassword2(value); break;
-            default: break;
-        }
-    };
+  useEffect(() => {
+    const timer = setTimeout(() => setMsg(""), 15000);
+    return () => clearTimeout(timer);
+  }, []);
 
-    function handleSubmit() {
-        let valid = true;
+  const handleInputChange = (e, type) => {
+    const value = e.target.value;
+    setError("");
 
-        if (!name || !email || !password || !password2) {
-            setError("Algún campo está vacío");
-            setRegistroActivar(true);
-            return;
-        }
+    switch (type) {
+      case "name": setName(value); break;
+      case "email": setEmail(value); break;
+      case "password": setPassword(value); break;
+      case "password2": setPassword2(value); break;
+      default: break;
+    }
+  };
 
-        if (!emailRegex.test(email)) {
-            setError("El email no es válido");
-            valid = false;
-        }
+  function handleSubmit() {
+    let valid = true;
 
-        if (password.length < 8) {
-            setError("La contraseña debe tener al menos 8 caracteres");
-            valid = false;
-        }
-
-        for (let simbolo of forbiddenSymbols) {
-            if (password.includes(simbolo)) {
-                setError("La contraseña no puede contener: ; ? \\ or and");
-                valid = false;
-                break;
-            }
-        }
-
-        if (password !== password2) {
-            setError("Las contraseñas no coinciden");
-            valid = false;
-        }
-
-        if (!valid) {
-            setRegistroActivar(true);
-            return;
-        }
-
-        setError("");
-        setRegistroActivar(false);
-
-        const url = "http://localhost:8080/api/auth/register";
-        const headers = {
-            "Accept": "application/json",
-            "Content-Type": "application/json"
-        };
-        const data = {
-            name,
-            email,
-            password
-        };
-
-        fetch(url, {
-            method: "POST",
-            headers: headers,
-            body: JSON.stringify(data)
-        })
-            .then(async (response) => {
-                if (!response.ok) throw new Error(await response.text());
-                setMsg("¡Registro exitoso!");
-                setTimeout(() => {
-                    navigate("/welcome");
-                }, 500);
-            })
-            .catch(async () => {
-                setError("El email ya existe!!!");
-                
-            });
-
-        setName("");
-        setEmail("");
-        setPassword("");
-        setPassword2("");
+    if (!name || !email || !password || !password2) {
+      setError("Algún campo está vacío");
+      setRegistroActivar(true);
+      return;
     }
 
-    return (
-        <>
-            <h1>Register</h1>
-            <div className="Credenciales">
-                <p>
-                    {msg !== "" ?
-                        <span className="success">{msg}</span> :
-                        <span className="error">{error}</span>}
-                </p>
-                <input className="Name" placeholder="Nombre" value={name} onChange={(e) => handleInputChange(e, "name")} />
-                <input className="Email" placeholder="Email" value={email} onChange={(e) => handleInputChange(e, "email")} />
-                <input className="Password" type='password' placeholder="Contraseña" value={password} onChange={(e) => handleInputChange(e, "password")} />
-                <input className="Password2" type='password' placeholder='Repetir contraseña' value={password2} onChange={(e) => handleInputChange(e, "password2")} />
-                <button className="Register" onClick={handleSubmit}>Register</button>
-            </div>
-        </>
-    );
+    if (!emailRegex.test(email)) {
+      setError("El email no es válido");
+      valid = false;
+    }
+
+    if (password.length < 8) {
+      setError("La contraseña debe tener al menos 8 caracteres");
+      valid = false;
+    }
+
+    for (let simbolo of forbiddenSymbols) {
+      if (password.includes(simbolo)) {
+        setError("La contraseña no puede contener: ; ? \\ or and");
+        valid = false;
+        break;
+      }
+    }
+
+    if (password !== password2) {
+      setError("Las contraseñas no coinciden");
+      valid = false;
+    }
+
+    if (!valid) {
+      setRegistroActivar(true);
+      return;
+    }
+
+    setError("");
+    setRegistroActivar(false);
+
+    const url = "http://localhost:8080/api/auth/register";
+    const headers = {
+      "Accept": "application/json",
+      "Content-Type": "application/json"
+    };
+    const data = {
+      name,
+      email,
+      password
+    };
+
+    fetch(url, {
+      method: "POST",
+      headers: headers,
+      body: JSON.stringify(data)
+    })
+      .then(async (response) => {
+        if (!response.ok) throw new Error(await response.text());
+        setMsg("¡Registro exitoso!");
+        setTimeout(() => {
+          navigate("/welcome");
+        }, 500);
+      })
+      .catch(async () => {
+        setError("El email ya existe!!!");
+      });
+
+    setName("");
+    setEmail("");
+    setPassword("");
+    setPassword2("");
+  }
+
+  return (
+    <>
+      <h1>Register</h1>
+      <div className="Credenciales">
+        <p>
+          {msg !== "" ?
+            <span className="success">{msg}</span> :
+            <span className="error">{error}</span>}
+        </p>
+        <input className="Name" placeholder="Nombre" value={name} onChange={(e) => handleInputChange(e, "name")} />
+        <input className="Email" placeholder="Email" value={email} onChange={(e) => handleInputChange(e, "email")} />
+
+        <div className="PasswordField">
+          <input
+            className="Password"
+            type={showPassword ? "text" : "password"}
+            placeholder="Password"
+            value={password}
+            onChange={(e) => handleInputChange(e, "password")}
+          />
+          <span className="TogglePassword" onClick={() => setShowPassword(!showPassword)}>
+            {showPassword ? ojoabierto : ojocerrado}
+          </span>
+        </div>
+
+        <div className="PasswordField">
+          <input
+            className="Password"
+            type={showPassword2 ? "text" : "password"}
+            placeholder="Repetir contraseña"
+            value={password2}
+            onChange={(e) => handleInputChange(e, "password2")}
+          />
+          <span className="TogglePassword" onClick={() => setShowPassword2(!showPassword2)}>
+            {showPassword2 ? ojoabierto : ojocerrado}
+          </span>
+        </div>
+
+        <button className="Register" onClick={handleSubmit}>Register</button>
+      </div>
+    </>
+  );
 }
 
 export default Register;
