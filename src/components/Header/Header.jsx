@@ -11,7 +11,7 @@ const [isOpen, setIsOpen] = useState(true);
       <header>
         <div className="menu-logo">
           <Sidebar isOpen={isOpen} setIsOpen={setIsOpen} />
-          <img src={logo} alt="" srcset="" />
+          <img src={logo} alt="" srcSet="" />
         </div>
 
         <div className="perfil">

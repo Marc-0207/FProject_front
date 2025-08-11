@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
-import { calendario } from "../SVG";
 import './CrearEvento.css';
 
 function CrearEvento() {
   const [files, setFiles] = useState();
   const [preview, setPreview] = useState();
+  const [fechas, setFechas] = useState(1);
+  const [error, setError] = useState("");
+  const [nombre, setnombre] = useState();
+  const [descripcion, setDescripcion] = useState();
 
   useEffect(() => {
     if (!files || files.length === 0) return;
@@ -16,6 +19,36 @@ function CrearEvento() {
       URL.revokeObjectURL(objectUrl);
     };
   }, [files]);
+
+  function AñadirFecha(){
+    if(fechas===16){
+      setError("No puedes añadir más de 16 fechas")
+      return;
+    }
+    else{
+      setError("");
+      setFechas(fechas + 1);
+      return(
+        <input classnombre="Calendario" type="date"/>
+      )
+    }
+  }
+  const handleInputChange = (e, type) => {
+      const value = e.target.value;
+      setError("");
+
+      switch (type) {
+          case "nombre": setnombre(value); break;
+          case "Descripción": setDescripcion(value); break;
+          case "fecha": setFechas(value); break;
+          default: break;
+      }
+  };
+  function newEvent(){
+    if(!nombre || !Descripción || !fechas){
+      setError("Algún campo está vacío")
+    }
+  }
 
   return (
     <>
@@ -32,32 +65,42 @@ function CrearEvento() {
             }
           }}
         />
-        <div className="ImagenRow">
-          <div className="ImagenContainer">
+        <div classnombre="ImagenRow">
+          <div classnombre="ImagenContainer">
             {preview ? (
-              <img src={preview} className="PreviewImage" alt="Preview" />
+              <img src={preview} classnombre="PreviewImage" alt="Preview" />
             ) : (
-              <div className="PlaceholderCircle"></div>
+              <div classnombre="PlaceholderCircle"></div>
             )}
           </div>
         </div>
 
-        <div className="FormContainer">
-          <div className="column">
+        <div classnombre="FormContainer">
+          <div classnombre="column">
             <p>Nombre del evento</p>
-            <input className="Nombre" placeholder="Nombre" />
-            <p>Duración del evento</p>
-            <input className="Duracion" placeholder="Duración" />
+            <input classnombre="Nombre" placeholder="Nombre" value={nombre} onChange={(e) => handleInputChange(e, "nombre")} /> 
           </div>
-          <div className="column">
-            <p>Fecha inicio</p>
-            <input className="Calendario" type="date" />
+          <div classnombre="column">
+            <div classnombre="Fechas">
+              <div classnombre="FechasHeader">
+                <p>Fecha/s</p>
+                <button onClick={AñadirFecha}>Añadir Fecha</button>
+              </div>
+              {error && <p classnombre="error">{error}</p>}
+              <div classnombre="FechasGrid">
+                {Array.from({ length: fechas }, (_, i) => (
+                  <input key={i} classnombre="Calendario" type="date" value={fechas} onChange={(e) => handleInputChange(e, "fecha")} />
+                ))}
+              </div>
+
+
+            </div>
             <p>Descripción</p>
-            <textarea></textarea>
+            <textarea value={descripcion} onChange={(e) => handleInputChange(e, "descripcion")}></textarea>
           </div>
         </div>
 
-        <button className="CrearEvento">Crear Evento</button>
+        <button classnombre="CrearEvento" onClick={newEvent}>Crear Evento</button>
       </div>
     </>
   );
