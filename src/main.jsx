@@ -6,7 +6,6 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Welcome from "./components/Auth/Welcome";
 import Calendario from "./components/Calendario/Calendario";
 import Home from "./components/Home/ListaEventos";
-import Notificaciones from "./components/Notificaciones/Notificaciones";
 import Login from "./components/Auth/Login.jsx";
 import Register from "./components/Auth/Register.jsx";
 import CrearEvento from "./components/CrearEvento/CrearEvento.jsx"
@@ -20,7 +19,6 @@ createRoot(document.getElementById("root")).render(
           <Route index element={<Home />} />
           <Route path="/welcome" element={<Welcome />} />
           <Route path="/calendario" element={<Calendario />} />
-          <Route path="/notificaciones" element={<Notificaciones />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/crearevento" element={<CrearEvento />} />
