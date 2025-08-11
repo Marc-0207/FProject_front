@@ -1,104 +1,171 @@
-/* Estilos generales del contenedor */
+/* Header */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  border-bottom: 2px solid black;
+  height: 50px;
+  width: 100%;
+  padding: 8px 25px;
+  box-sizing: border-box;
+  background-color: white;
+  z-index: 1000;
+  position: relative; /* Para que el sidebar se posicione con respecto al header */
+}
+
+.menu-logo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  position: relative; /* Para que el menú del sidebar se posicione respecto aquí */
+}
+
+.perfil {
+  display: flex;
+  align-items: center;
+}
+
+/* Contenedor general del sidebar */
 .sidebar {
-  width: 250px;
-  background-color: #f4f4f4;
-  padding: 1rem;
-  box-shadow: 2px 0 5px rgba(0,0,0,0.1);
-  transition: transform 0.3s ease-in-out;
-  transform: translateX(0%);
+  position: relative; /* Para que las opciones se posicionen respecto al sidebar */
+  margin-left: 1rem; /* Separación desde el logo o contenido a la izquierda */
+  box-shadow: none; /* Opcional, para que no sobresalga con sombra fuera del header */
+  border-radius: 8px;
+  background-color: transparent; /* Toma el fondo del header */
+  padding: 0;
+  display: flex;
+  align-items: center;
+  z-index: 1010; /* Más alto que el header */
 }
 
-/* Estilo para cuando la barra está cerrada */
-.sidebar.closed {
-  transform: translateY(-20%) translateX(0%);
-  
-}
-
-/* Título */
-.sidebar h1 {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-}
-
-/* Botón para abrir/cerrar */
-.sidebar button {
-  background: none;
+/* Solo mostrar el botón principal */
+.sidebar > button {
+  background: #4a90e2;
   border: none;
   cursor: pointer;
   font-size: 1.2rem;
-  margin-bottom: 1rem;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.3rem 0.8rem;
+  border-radius: 6px;
+  box-shadow: none; /* Menos sombra para que no se vea raro dentro del header */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Navegación */
+.sidebar > button:hover {
+  background: #357abd;
+  box-shadow: 0 5px 15px rgba(53, 122, 189, 0.6);
+}
+
+/* Contenedor para las opciones desplegables, inicialmente oculto */
 .Opciones {
-  display: flex;
+  display: none;
+  position: absolute;
+  top: 100%; /* Justo debajo del botón */
+  left: 0;
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  padding: 0.5rem 0;
+  min-width: 220px;
   flex-direction: column;
-  gap: 0.75rem;
+  z-index: 1100; /* Más alto que el header */
+  animation: dropdownFadeIn 0.25s ease forwards;
+}
+
+/* Mostrar opciones cuando el sidebar tenga la clase 'active' */
+.sidebar.active .Opciones {
+  display: flex;
+}
+
+/* Animación suave para desplegable */
+@keyframes dropdownFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Cada ítem del menú */
 .menu-item {
+  padding: 0.6rem 1.5rem;
+  cursor: pointer;
+  color: #444;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: background-color 0.3s ease, color 0.3s ease;
   display: flex;
   align-items: center;
-  padding: 0.5rem;
-  cursor: pointer;
-  border-radius: 4px;
-  transition: background 0.2s ease-in-out;
-  color: inherit;
-  text-decoration: none;
+  gap: 0.75rem;
+  border-left: 4px solid transparent;
+  border-radius: 0 8px 8px 0;
 }
 
 .menu-item:hover {
-  background-color: #e0e0e0;
+  background-color: #f0f6ff;
+  color: #2a63bf;
+  border-left-color: #4a90e2;
 }
 
-/* Icono del ítem */
+/* Iconos en menú */
 .menu-item svg {
-  margin-right: 0.5rem;
+  margin: 0;
+  flex-shrink: 0;
+  fill: #777;
+  transition: fill 0.3s ease;
 }
 
-/* Contenedor relativo del dropdown */
-.dropdown-container {
-  position: relative;
+.menu-item:hover svg {
+  fill: #4a90e2;
 }
 
-/* Dropdown hacia abajo */
+/* Botón cerrar sesión */
+.logout-item {
+  color: #d32f2f;
+  font-weight: 600;
+  border-left-color: transparent;
+  transition: background-color 0.3s ease;
+  border-radius: 0 8px 8px 0;
+  padding-left: 1.5rem;
+}
+
+.logout-item:hover {
+  background-color: #fdecea;
+  color: #b71c1c;
+  border-left-color: #d32f2f;
+}
+
+/* Dropdown dentro de ajustes */
 .dropdown {
-  position: absolute;
-  top: 100%;   /* justo debajo del elemento padre */
-  left: 0;
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
-  padding: 0.5rem;
-  width: max-content;
-  z-index: 10;
-  transform-origin: top center;
-  animation: dropdownDown 0.3s ease-out;
+  background: #fff;
+  border-top: 1px solid #e0e0e0;
+  padding: 0.5rem 1rem;
   font-size: 0.9rem;
-  color: #555;
+  color: #333;
 }
 
-/* Animación para desplegable hacia abajo */
-@keyframes dropdownDown {
-  from {
-    opacity: 0;
-    transform: scaleY(0.8);
-  }
-  to {
-    opacity: 1;
-    transform: scaleY(1);
-  }
+.dropdown-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.25rem 0;
 }
 
-/* Switch de modo oscuro */
+/* Switch para modo oscuro */
 .switch {
   position: relative;
   display: inline-block;
-  width: 50px;
-  height: 24px;
-  margin-left: 0.5rem;
+  width: 36px;
+  height: 20px;
 }
 
 .switch input {
@@ -112,34 +179,26 @@
   cursor: pointer;
   top: 0; left: 0; right: 0; bottom: 0;
   background-color: #ccc;
-  transition: .4s;
-  border-radius: 24px;
+  transition: 0.4s;
+  border-radius: 20px;
 }
 
 .slider:before {
   position: absolute;
   content: "";
-  height: 18px;
-  width: 18px;
-  left: 3px;
-  bottom: 3px;
+  height: 16px;
+  width: 16px;
+  left: 2px;
+  bottom: 2px;
   background-color: white;
-  transition: .4s;
+  transition: 0.4s;
   border-radius: 50%;
 }
 
 input:checked + .slider {
-  background-color: #4caf50;
+  background-color: #4a90e2;
 }
 
 input:checked + .slider:before {
-  transform: translateX(26px);
-}
-.logout-item {
-  color: #d32f2f; /* rojo intenso */
-  font-weight: bold;
-}
-
-.logout-item:hover {
-  background-color: #fddede; /* fondo rojo claro */
+  transform: translateX(16px);
 }

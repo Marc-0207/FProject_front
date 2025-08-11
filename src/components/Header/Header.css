@@ -1,20 +1,51 @@
-header{
+/* Header */
+header {
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
+  align-items: center;
   position: sticky;
   top: 0;
   border-bottom: 2px solid black;
-  height: 50px;
+  height: 60px;
   width: 100%;
-  padding: 8px 25px;
+  padding: 0 25px;
   box-sizing: border-box;
   background-color: white;
+  z-index: 1000;
 }
-.perfil{  
+
+/* Contenedor del logo y el sidebar */
+.menu-logo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  position: relative;
+}
+
+/* Logo */
+.menu-logo img {
+  height: 36px;     /* Ajusta según el tamaño que desees */
+  width: auto;
+  object-fit: contain;
+}
+
+/* Contenedor del perfil */
+.perfil {
   display: flex;
   align-items: center;
 }
-.menu-logo{
-  display: flex;
+
+/* Estilo para el enlace de perfil */
+.perfil a {
+  text-decoration: none;
+  color: #4a90e2;
+  font-weight: 500;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+}
+
+.perfil a:hover {
+  background-color: #f0f6ff;
 }

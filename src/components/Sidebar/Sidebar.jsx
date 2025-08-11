@@ -14,11 +14,12 @@ import "./Sidebar.css";
 import { useState } from "react";
 
 const Sidebar = ({ isOpen, setIsOpen }) => {
-
   let naviget = useNavigate();
-  function logoutSubmit(){
-    naviget("/welcome"); 
+
+  function logoutSubmit() {
+    naviget("/welcome");
   }
+
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [isOn, setIsOn] = useState(false);
 
@@ -28,21 +29,16 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
   };
 
   const navItems = [
-    { title: "Mis eventos",
-      path: "/", 
+    {
+      title: "Mis eventos",
+      path: "/",
       icon: eventos,
-      hasDropdown: false, 
+      hasDropdown: false,
     },
     {
       title: "Calendario",
       path: "/calendario",
       icon: calendario,
-      hasDropdown: false,
-    },
-    {
-      title: "Notificaciones",
-      path: "/notificaciones",
-      icon: notificacion,
       hasDropdown: false,
     },
     {
@@ -54,20 +50,24 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
     {
       title: "Logout",
       icon: logout,
-    }
+    },
   ];
 
   return (
-    <div className={`sidebar ${isOpen ? "" : "closed"}`}>
+    <div className={`sidebar ${!isOpen ? "active" : "closed"}`}>
       <button onClick={() => setIsOpen(!isOpen)}>
-        {isOpen ? cerrar : menu}
+        {isOpen ? menu : cerrar}
       </button>
 
       <nav className="Opciones">
         {navItems.map((item, index) => (
           <div key={item.title} className="dropdown-container">
             {item.title === "Logout" ? (
-              <div className="menu-item logout-item" onClick={logoutSubmit} style={{ cursor: "pointer" }}>
+              <div
+                className="menu-item logout-item"
+                onClick={logoutSubmit}
+                style={{ cursor: "pointer" }}
+              >
                 {item.icon}
                 <span>{item.title}</span>
               </div>
@@ -89,7 +89,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
                 {activeDropdown === index && (
                   <div className="dropdown">
                     {item.dropdownItems.map((subItem, i) => (
-                      <div key={i}>
+                      <div key={i} className="dropdown-item">
                         {subItem}
                         <label className="switch">
                           <input
@@ -111,4 +111,5 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
     </div>
   );
 };
+
 export default Sidebar;
