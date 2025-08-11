@@ -1,7 +1,5 @@
 /* Contenedor principal */
-div {
-  font-family: Arial, sans-serif;
-}
+
 
 /* Ocultar el input de archivo (se activa al hacer click en la imagen) */
 input[type="file"] {
