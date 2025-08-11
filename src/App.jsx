@@ -1,15 +1,23 @@
 import Sidebar from './components/Sidebar/Sidebar'
-import { Outlet } from "react-router-dom";
-import { useState } from 'react'
+import { Outlet, useLocation } from "react-router-dom";
+import {useState } from 'react'
 import './App.css'
 import Footer from './components/Footer/Footer';
 import Header from './components/Header/Header';
+import logo from "./assets/logo.png";
 
 function App() {
-   
+  const location = useLocation();
+  console.log(location.pathname)
+
+
+
   return (
     <>
-      <Header />
+      {
+        location.pathname == "/welcome" ? <img src={logo} alt="" className='logo-welcome'/> : <Header />
+      }
+            
       <div id='page-container'>
         <Outlet />
       </div>

@@ -44,3 +44,12 @@ border-radius: 8px;
 .features>div:nth-child(even) {
   flex-direction: row-reverse;
 }
+
+.logo-welcome{
+  position: static;
+  top: 0;
+  left: 0;
+  margin-left: 25px;
+  margin-top: 20px;
+  height: 40px;
+}

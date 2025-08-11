@@ -5,12 +5,12 @@
   padding: 1rem;
   box-shadow: 2px 0 5px rgba(0,0,0,0.1);
   transition: transform 0.3s ease-in-out;
-  transform: translateX(-150%);
+  transform: translateX(0%);
 }
 
 /* Estilo para cuando la barra está cerrada */
 .sidebar.closed {
-  transform: translateY(-20%) translateX(-150%);
+  transform: translateY(-20%) translateX(0%);
   
 }
 
