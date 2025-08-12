@@ -14,11 +14,17 @@ function App() {
 
   return (
     <>
-      {
-        location.pathname == "/welcome" ? <img src={logo} alt="" className='logo-welcome'/> : <Header />
-      }
-            
-      <div id='page-container'>
+      {location.pathname == "/welcome" ||
+      location.pathname == "/login" ||
+      location.pathname == "/register" ? (
+        <div>
+          <img src={logo} alt="" className="logo-welcome" />
+        </div>
+      ) : (
+        <Header />
+      )}
+
+      <div id="page-container">
         <Outlet />
       </div>
       <Footer />
