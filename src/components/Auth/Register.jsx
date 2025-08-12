@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 
 function Register() {
     const navigate = useNavigate(); 
-    const [registroActivar, setRegistroActivar] = useState(true);
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -38,7 +37,6 @@ function Register() {
 
         if (!name || !email || !password || !password2) {
             setError("Algún campo está vacío");
-            setRegistroActivar(true);
             return;
         }
 
@@ -66,14 +64,12 @@ function Register() {
         }
 
         if (!valid) {
-            setRegistroActivar(true);
             return;
         }
 
         setError("");
-        setRegistroActivar(false);
 
-        const url = "http://localhost:8080/api/auth/register";
+        const url = "https://localhost:8080/api/auth/register";
         const headers = {
             "Accept": "application/json",
             "Content-Type": "application/json"
