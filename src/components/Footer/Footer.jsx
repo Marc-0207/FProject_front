@@ -10,7 +10,7 @@ export default function Footer() {
           QuedApp ©2025 <br /> Todos los derechos reservados.
         </h4>
         <div>
-          <img src={logo} alt="" srcset="" className="logo-footer" />
+          <img src={logo} alt="" srcSet="" className="logo-footer" />
         </div>
         <div className="footer-links-container">
           <div className="footer-links">

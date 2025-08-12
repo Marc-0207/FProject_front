@@ -35,7 +35,7 @@ function Login(){
     }
     function loginSubmit(){
         if(email !== "" && password != ""){
-            let url = "http://localhost:8080/api/auth/login"
+            let url = "https://localhost:8080/api/auth/login"
             let headers = {
                 "Accept": "application/json",
                 "Content-type": "application/json"
@@ -55,6 +55,7 @@ function Login(){
                     setTimeout(function(){
                         naviget("/");
                     }, 500)
+                    console.log(response.body)
             }).catch(async (err) => {
                 setError(err.message);
                 
