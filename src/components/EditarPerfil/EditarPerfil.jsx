@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import './EditarPerfil.css';
+import { editar } from "../SVG";
 
-//Acabar de cambiar los inputs de nombre y contraseña
 function EditarPerfil() {
   const [files, setFiles] = useState();
   const [preview, setPreview] = useState();
+  const [name, setName] = useState("");
   const fileInputRef = useRef(null); // 
 
   useEffect(() => {
@@ -18,6 +19,36 @@ function EditarPerfil() {
     };
   }, [files]);
 
+  function save(){
+    if(!name){
+
+    }
+    else{
+      const profile = url+"/profile"
+      const headers = {
+        "Accept": "application/json",
+        "Content-Type": "application/json"
+      };
+      const data = {
+          name,
+      };
+
+      fetch(profile, {
+          method: "PUT",
+          headers: headers,
+          body: JSON.stringify(data)
+      })
+      .then(async (response) => {
+          if (!response.ok) throw new Error(await response.text());
+          setMsg("¡Perfil editado!");
+          setTimeout(() => {
+          }, 500);
+      })
+      .catch(async () => {  
+        setError("A")              
+      });
+      }
+    }
   return (
     <div>
       <div className="ImagenRow">
@@ -48,10 +79,8 @@ function EditarPerfil() {
       <div className="FormContainer">
         <p>Nombre de usuario</p>
         <input></input>
-        <p>Contraseña</p>
-        <input></input>
       </div>
-      <p>Guardar</p>
+      <button className="Guardar" onClick={save}>Guardar</button>
     </div>
   );
 }
