@@ -4,10 +4,10 @@ import './CrearEvento.css';
 function CrearEvento() {
   const [files, setFiles] = useState();
   const [preview, setPreview] = useState();
-  const [fechas, setFechas] = useState(1);
+  const [dates, setDates] = useState([""]);
   const [error, setError] = useState("");
-  const [nombre, setnombre] = useState();
-  const [descripcion, setDescripcion] = useState();
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
 
   useEffect(() => {
     if (!files || files.length === 0) return;
@@ -21,15 +21,15 @@ function CrearEvento() {
   }, [files]);
 
   function AñadirFecha(){
-    if(fechas===16){
-      setError("No puedes añadir más de 16 fechas")
+    if(dates.length===16){
+      setError("No puedes añadir más de 16 dates")
       return;
     }
     else{
       setError("");
-      setFechas(fechas + 1);
+      setDates([...dates, ""]);
       return(
-        <input classnombre="Calendario" type="date"/>
+        <input className="Calendario" type="date"/>
       )
     }
   }
@@ -38,15 +38,46 @@ function CrearEvento() {
       setError("");
 
       switch (type) {
-          case "nombre": setnombre(value); break;
-          case "Descripción": setDescripcion(value); break;
-          case "fecha": setFechas(value); break;
+          case "name": setName(value); break;
+          case "description": setDescription(value); break;
+          case "fecha": setDates(value); break;
           default: break;
       }
   };
   function newEvent(){
-    if(!nombre || !Descripción || !fechas){
+    if(!name || !description || dates[0] === ""){
       setError("Algún campo está vacío")
+    }
+    else{
+        const url = "https://localhost:8080/api/event";
+        const headers = {
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+        };
+        const data = {
+            name,
+            dates,
+            description
+        };
+
+        fetch(url, {
+            method: "POST",
+            headers: headers,
+            body: JSON.stringify(data)
+        })
+            .then(async (response) => {
+                if (!response.ok) throw new Error(await response.text());
+                setMsg("¡Evento creado!");
+                setTimeout(() => {
+                }, 500);
+            })
+            .catch(async () => {  
+              setError("A")              
+            });
+
+        setName("");
+        setDescription("");
+        setDates([""]);
     }
   }
 
@@ -65,42 +96,45 @@ function CrearEvento() {
             }
           }}
         />
-        <div classnombre="ImagenRow">
-          <div classnombre="ImagenContainer">
+        <div className="ImagenRow">
+          <div className="ImagenContainer">
             {preview ? (
-              <img src={preview} classnombre="PreviewImage" alt="Preview" />
+              <img src={preview} className="PreviewImage" alt="Preview" />
             ) : (
-              <div classnombre="PlaceholderCircle"></div>
+              <div className="PlaceholderCircle"></div>
             )}
           </div>
         </div>
 
-        <div classnombre="FormContainer">
-          <div classnombre="column">
+        <div className="FormContainer">
+          {error && <p className="error">{error}</p>}
+          <div className="column">
             <p>Nombre del evento</p>
-            <input classnombre="Nombre" placeholder="Nombre" value={nombre} onChange={(e) => handleInputChange(e, "nombre")} /> 
+            <input className="Nombre" value={name} onChange={(e) => handleInputChange(e, "name")} /> 
           </div>
-          <div classnombre="column">
-            <div classnombre="Fechas">
-              <div classnombre="FechasHeader">
+          <div className="column">
+            <div className="Fechas">
+              <div className="FechasHeader">
                 <p>Fecha/s</p>
                 <button onClick={AñadirFecha}>Añadir Fecha</button>
               </div>
-              {error && <p classnombre="error">{error}</p>}
-              <div classnombre="FechasGrid">
-                {Array.from({ length: fechas }, (_, i) => (
-                  <input key={i} classnombre="Calendario" type="date" value={fechas} onChange={(e) => handleInputChange(e, "fecha")} />
-                ))}
+              <div className="FechasGrid">
+                {dates.map((fecha, i) => (
+                <input key={i} className="Calendario"type="date"value={fecha}onChange={(e) => {
+                  const nuevasFechas = [...dates];
+                  nuevasFechas[i] = e.target.value;
+                  setDates(nuevasFechas);
+                }}
+              />
+            ))}
               </div>
-
-
             </div>
             <p>Descripción</p>
-            <textarea value={descripcion} onChange={(e) => handleInputChange(e, "descripcion")}></textarea>
+            <input value={description} onChange={(e) => handleInputChange(e, "description")} />
           </div>
         </div>
 
-        <button classnombre="CrearEvento" onClick={newEvent}>Crear Evento</button>
+        <button className="CrearEvento" onClick={newEvent}>Crear Evento</button>
       </div>
     </>
   );
