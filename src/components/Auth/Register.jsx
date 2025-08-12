@@ -1,6 +1,7 @@
 import "./Register.css";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import '../../constants'
 
 function Register() {
   const navigate = useNavigate();
@@ -10,6 +11,7 @@ function Register() {
   const [password2, setPassword2] = useState("");
   const [error, setError] = useState("");
   const [msg, setMsg] = useState("");
+  const url = window.url;
 
   const forbiddenSymbols = [";", "?", "\\", " or ", " and "];
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -50,37 +52,54 @@ function Register() {
     }
 
     if (!emailRegex.test(email)) {
-      setError("El email no es válido");
-      valid = false;
+        setError("El email no es válido");
+        valid = false;
     }
 
-    if (password.length < 8) {
-      setError("La contraseña debe tener al menos 8 caracteres");
-      valid = false;
+    if (password.length < 8 || password.length > 16) {
+        setError("La contraseña debe tener al menos 8 caracteres y no puede pasar de 16");
+        valid = false;
+    }
+
+    const tieneSimbolo = /[^a-zA-Z0-9]/.test(password);
+    const tieneMayuscula = /[A-Z]/.test(password);
+    const tieneNumero = /[0-9]/.test(password);
+
+    if (!tieneSimbolo) {
+        setError("La contraseña tiene que tener mínimo un símbolo especial");
+        valid = false;
+    }
+    if (!tieneMayuscula) {
+        setError("La contraseña tiene que tener mínimo una mayúscula");
+        valid = false;
+    }
+    if (!tieneNumero) {
+        setError("La contraseña tiene que tener mínimo un número");
+        valid = false;
     }
 
     for (let simbolo of forbiddenSymbols) {
-      if (password.includes(simbolo)) {
+    if (password.includes(simbolo)) {
         setError("La contraseña no puede contener: ; ? \\ or and");
         valid = false;
         break;
-      }
+    }
     }
 
     if (password !== password2) {
-      setError("Las contraseñas no coinciden");
-      valid = false;
+        setError("Las contraseñas no coinciden");
+        valid = false;
     }
 
     if (!valid) {
-      return;
+        return;
     }
-
     setError("");
 
-    const url = "https://localhost:8080/api/auth/register";
+    const register = url + "/auth/register";
+    console.log(register)
     const headers = {
-      Accept: "application/json",
+      "Accept": "application/json",
       "Content-Type": "application/json",
     };
     const data = {
@@ -89,7 +108,7 @@ function Register() {
       password,
     };
 
-    fetch(url, {
+    fetch(register, {
       method: "POST",
       headers: headers,
       body: JSON.stringify(data),

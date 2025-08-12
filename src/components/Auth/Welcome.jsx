@@ -17,19 +17,19 @@ function Welcome() {
           <h2>
             jaksjkklnxlznxcnscnzlkxncls <br /> asjasajskjaskbdhsa
           </h2>
-          <img src="" alt="" srcset="" />
+          <img src="" alt="" srcSet="" />
         </div>
         <div>
           <h2>
             jaksjkklnxlznxcnscnzlkxncls <br /> asjasajskjaskbdhsa
           </h2>
-          <img src="" alt="" srcset="" />
+          <img src="" alt="" srcSet="" />
         </div>
         <div>
           <h2>
             jaksjkklnxlznxcnscnzlkxncls <br /> asjasajskjaskbdhsa
           </h2>
-          <img src="" alt="" srcset="" />
+          <img src="" alt="" srcSet="" />
         </div>
       </section>
     </div>

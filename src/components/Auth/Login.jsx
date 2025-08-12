@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import './Login.css'
 import { useNavigate } from 'react-router-dom';
+import '../../constants'
+
 function Login(){
 
     const naviget = useNavigate();
@@ -8,10 +10,12 @@ function Login(){
     const [password, setPass] = useState("")
     const [error, setError] = useState("");
     const [msg, setMsg] = useState("");
+    const url = window.url;
+
     useEffect(() => {
         setTimeout(function(){
             setMsg("");
-        }, 5000)
+        }, 500)
     })
 
     const handleInputChange = (e, type) => {
@@ -34,8 +38,8 @@ function Login(){
         }
     }
     function loginSubmit(){
+        const login = url + "/auth/login";
         if(email !== "" && password != ""){
-            let url = "https://localhost:8080/api/auth/login"
             let headers = {
                 "Accept": "application/json",
                 "Content-type": "application/json"
@@ -44,7 +48,7 @@ function Login(){
                 email: email,
                 password: password
             };
-            fetch(url, {
+            fetch(login, {
                 method: "POST",
                 headers: headers,
                 body: JSON.stringify(Data)
@@ -74,7 +78,7 @@ function Login(){
                     }
                 </p>
                 <input className="Email" placeholder="Email" value={email} onChange={(e) => handleInputChange(e, "email")}></input>
-                <input className="Password" placeholder="Password" value={password} onChange={(e) => handleInputChange(e, "password")}></input>
+                <input className="Password" placeholder="Password" type="password" value={password} onChange={(e) => handleInputChange(e, "password")}></input>
                 <button className="Login" onClick={loginSubmit}>Login</button>
                 <p className='forgot'>Forgot password?</p>
             </div>
