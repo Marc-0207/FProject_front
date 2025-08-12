@@ -3,13 +3,13 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 function Register() {
-    const navigate = useNavigate(); 
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [password2, setPassword2] = useState("");
-    const [error, setError] = useState("");
-    const [msg, setMsg] = useState("");
+  const navigate = useNavigate();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [password2, setPassword2] = useState("");
+  const [error, setError] = useState("");
+  const [msg, setMsg] = useState("");
 
   const forbiddenSymbols = [";", "?", "\\", " or ", " and "];
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -80,7 +80,7 @@ function Register() {
 
     const url = "https://localhost:8080/api/auth/register";
     const headers = {
-      "Accept": "application/json",
+      Accept: "application/json",
       "Content-Type": "application/json",
     };
     const data = {
@@ -88,7 +88,7 @@ function Register() {
       email,
       password,
     };
-    /* console.log(data) */
+
     fetch(url, {
       method: "POST",
       headers: headers,
