@@ -1,5 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import './CrearEvento.css';
+import '../../constants'
+import Compressor from 'compressorjs';
 
 function CrearEvento() {
   const [files, setFiles] = useState();
@@ -8,6 +10,8 @@ function CrearEvento() {
   const [error, setError] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
+  const fileInputRef = useRef(null);
+  const url = window.url;
 
   useEffect(() => {
     if (!files || files.length === 0) return;
@@ -22,7 +26,7 @@ function CrearEvento() {
 
   function AñadirFecha(){
     if(dates.length===16){
-      setError("No puedes añadir más de 16 dates")
+      setError("No puedes añadir más de 16 fechas")
       return;
     }
     else{
@@ -49,7 +53,7 @@ function CrearEvento() {
       setError("Algún campo está vacío")
     }
     else{
-        const url = "https://localhost:8080/api/event";
+      const event = url+"/event"
         const headers = {
             "Accept": "application/json",
             "Content-Type": "application/json"
@@ -60,7 +64,7 @@ function CrearEvento() {
             description
         };
 
-        fetch(url, {
+        fetch(event, {
             method: "POST",
             headers: headers,
             body: JSON.stringify(data)
@@ -87,7 +91,20 @@ function CrearEvento() {
         <div>
           <h1>NUEVO EVENTO</h1>
         </div>
+        <div className="ImagenRow">
+          <div className="ImagenContainer"
+          onClick={() => fileInputRef.current.click()}
+          style={{ cursor: "pointer" }}>
+            {preview ? (
+              <img src={preview} className="PreviewImage" alt="Preview" />
+            ) : (
+              <div className="PlaceholderCircle"></div>
+            )}
+          </div>
+        </div>
+
         <input
+          ref={fileInputRef}
           type="file"
           accept="image/jpg, image/jpeg, image/png"
           onChange={(e) => {
@@ -96,15 +113,6 @@ function CrearEvento() {
             }
           }}
         />
-        <div className="ImagenRow">
-          <div className="ImagenContainer">
-            {preview ? (
-              <img src={preview} className="PreviewImage" alt="Preview" />
-            ) : (
-              <div className="PlaceholderCircle"></div>
-            )}
-          </div>
-        </div>
 
         <div className="FormContainer">
           {error && <p className="error">{error}</p>}
