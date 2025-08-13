@@ -2,9 +2,10 @@ import { useState, useEffect } from 'react';
 import './Login.css'
 import { useNavigate } from 'react-router-dom';
 import '../../constants'
+import { Cookies, useCookies } from 'react-cookie';
 
 function Login(){
-
+    const [cookies, setCookie] = useCookies(['jwt']);
     const naviget = useNavigate();
     const [email, setUser] = useState("");
     const [password, setPass] = useState("")
@@ -55,11 +56,12 @@ function Login(){
             })
             .then(async (response) =>{
                 if (!response.ok) throw new Error(await response.text())
-                    console.log(await response.text()) 
-                    setTimeout(function(){
-                        naviget("/");
-                    }, 500)
-                    console.log(response.body)
+                    return response.json()
+            }).then((data) => {
+                setCookie("JWT", data.JWT, {path: "/"});
+                setTimeout(function () {
+                    naviget("/");
+                }, 500);
             }).catch(async (err) => {
                 setError(err.message);
                 
