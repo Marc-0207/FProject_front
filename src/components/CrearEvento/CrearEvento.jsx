@@ -10,6 +10,7 @@ function CrearEvento() {
   const [error, setError] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
+  const [image, setimage] = useState(null);
   const fileInputRef = useRef(null);
   const url = window.url;
 
@@ -37,6 +38,26 @@ function CrearEvento() {
       )
     }
   }
+
+  const handleImageChange = (e) =>{
+    const file = e.target.files[0];
+    if(!file) return;
+
+    setimage(URL.createObjectURL(file));
+
+    new Compressor(file, {
+      quality: 0.85,
+      convertSize: 0,
+      mimeType: 'image/webp',
+      success(result){
+        const webpUrl = URL.createObjectURL(result);
+        setimage(webpUrl);
+      },
+      error(err){
+        console.error('Compression error: ', err.message);
+      }
+    })
+  }
   const handleInputChange = (e, type) => {
       const value = e.target.value;
       setError("");
@@ -45,11 +66,16 @@ function CrearEvento() {
           case "name": setName(value); break;
           case "description": setDescription(value); break;
           case "fecha": setDates(value); break;
+          case "image": setimage(value); break;
           default: break;
       }
   };
   function newEvent(){
-    if(!name || !description || dates[0] === ""){
+    if(!name || !description || dates[0] === "" || image=== null){
+      console.log(image)
+      console.log(name)
+      console.log(dates)
+      console.log(description)
       setError("Algún campo está vacío")
     }
     else{
@@ -61,7 +87,8 @@ function CrearEvento() {
         const data = {
             name,
             dates,
-            description
+            description,
+            image
         };
 
         fetch(event, {
@@ -82,6 +109,7 @@ function CrearEvento() {
         setName("");
         setDescription("");
         setDates([""]);
+        setimage(null);
     }
   }
 
@@ -110,6 +138,7 @@ function CrearEvento() {
           onChange={(e) => {
             if (e.target.files && e.target.files.length > 0) {
               setFiles([e.target.files[0]]);
+              handleImageChange(e);
             }
           }}
         />
