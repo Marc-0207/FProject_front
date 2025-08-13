@@ -1,70 +1,72 @@
-/* Contenedor principal */
+/* --- Contenedor principal --- */
+.EditarPerfil {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 3rem 1rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f9f9f9;
+  min-height: 100vh;
+}
 
-
-/* Ocultar el input de archivo (se activa al hacer click en la imagen) */
+/* Ocultar el input de archivo */
 input[type="file"] {
   display: none;
 }
 
-/* Fila que contiene la imagen */
+/* --- Imagen de perfil --- */
 .ImagenRow {
   display: flex;
   justify-content: center;
   margin-bottom: 2rem;
 }
 
-/* Contenedor circular interactivo */
 .ImagenContainer {
   position: relative;
-  width: 150px;
-  height: 150px;
+  width: 160px;
+  height: 160px;
   border-radius: 50%;
   overflow: hidden;
-  background-color: #f5f5f5;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  background-color: #e9e9e9;
   border: 2px solid #ccc;
-  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transition: border-color 0.3s ease;
+  cursor: pointer;
 }
 
 .ImagenContainer:hover {
-  border-color: #999;
+  border-color: #888;
 }
 
-/* Imagen de previsualización */
-.PreviewImage {
+.PreviewImage,
+.PlaceholderCircle {
   width: 100%;
   height: 100%;
   object-fit: cover;
   border-radius: 50%;
 }
 
-/* Placeholder circular gris */
 .PlaceholderCircle {
-  width: 100%;
-  height: 100%;
   background-color: #ddd;
-  border-radius: 50%;
 }
 
-/* Overlay de cámara */
 .ImagenContainer::after {
   content: "📷";
   position: absolute;
   font-size: 1.8rem;
   color: rgba(0, 0, 0, 0.6);
   background-color: rgba(255, 255, 255, 0.5);
-  width: 100%;
-  height: 100%;
+  border-radius: 50%;
   top: 0;
   left: 0;
-  border-radius: 50%;
-  opacity: 0;
+  width: 100%;
+  height: 100%;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  opacity: 0;
   transition: opacity 0.3s ease;
 }
 
@@ -72,50 +74,97 @@ input[type="file"] {
   opacity: 1;
 }
 
-/* Contenedor del formulario */
+/* --- Formulario --- */
 .FormContainer {
-  width: 300px;
+  width: 100%;
+  max-width: 340px;
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  margin-top: 1rem;
-  margin-bottom: 2rem;
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
 
 .FormContainer p {
   margin: 0;
-  font-weight: bold;
-  font-size: 0.95rem;
+  font-weight: 600;
+  font-size: 1rem;
   color: #333;
 }
 
-/* Inputs del formulario */
-.FormContainer input {
-  padding: 0.5rem;
+/* --- Campo editable del nombre --- */
+.NombreEditable {
+  display: flex;
+  flex-direction: column;
+}
+
+.NombreDisplay {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #f1f1f1;
+  padding: 0.5rem 0.75rem;
+  border-radius: 5px;
+}
+
+.NombreDisplay span {
   font-size: 1rem;
+  color: #444;
+}
+
+.Nombre {
+  font-size: 1rem;
+  padding: 0.5rem 0.75rem;
   border: 1px solid #ccc;
   border-radius: 5px;
   outline: none;
   transition: border-color 0.2s ease;
 }
 
-.FormContainer input:focus {
+.Nombre:focus {
   border-color: #666;
 }
 
-/* Botón de guardar */
-.FormContainer + p {
-  padding: 0.6rem 1.2rem;
+/* --- Botón editar icono --- */
+.NombreDisplay button {
+  background: none;
+  border: none;
+  padding: 0;
+  margin-left: 0.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  color: #666;
+  transition: color 0.2s ease;
+}
+
+.NombreDisplay button:hover {
+  color: #222;
+}
+
+/* --- Botón guardar --- */
+.Guardar {
+  margin-top: 1rem;
+  padding: 0.7rem 1.5rem;
   background-color: #007bff;
   color: white;
+  font-weight: bold;
+  font-size: 1rem;
+  border: none;
   border-radius: 6px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  text-align: center;
-  width: fit-content;
-  margin: 0 auto;
 }
 
-.FormContainer + p:hover {
+.Guardar:hover {
   background-color: #0056b3;
+}
+
+/* --- Error feedback --- */
+.error {
+  color: red;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
 }

@@ -1,12 +1,17 @@
 import { useEffect, useRef, useState } from "react";
 import './EditarPerfil.css';
 import { editar } from "../SVG";
+import Compressor from 'compressorjs';
 
 function EditarPerfil() {
   const [files, setFiles] = useState();
   const [preview, setPreview] = useState();
   const [name, setName] = useState("");
-  const fileInputRef = useRef(null); // 
+  const [image, setimage] = useState(null);
+  const [error, setError] = useState("");
+  const [isEditingName, setIsEditingName] = useState(false);
+  const fileInputRef = useRef(null); 
+  const url = window.url;
 
   useEffect(() => {
     if (!files || files.length === 0) return;
@@ -19,9 +24,39 @@ function EditarPerfil() {
     };
   }, [files]);
 
-  function save(){
-    if(!name){
+  const handleImageChange = (e) =>{
+    const file = e.target.files[0];
+    if(!file) return;
 
+    setimage(URL.createObjectURL(file));
+
+    new Compressor(file, {
+      quality: 0.85,
+      convertSize: 0,
+      mimeType: 'image/webp',
+      success(result){
+        const webpUrl = URL.createObjectURL(result);
+        setimage(webpUrl);
+      },
+      error(err){
+        console.error('Compression error: ', err.message);
+      }
+    })
+  }
+
+  const handleInputChange = (e, type) => {
+    const value = e.target.value;
+    setError("");
+
+    switch (type) {
+        case "name": setName(value); break;
+        case "image": setimage(value); break;
+        default: break;
+    }
+  };
+  function save(){
+    if(!name || image === null){
+      setError("Algún campo está vacío")
     }
     else{
       const profile = url+"/profile"
@@ -31,6 +66,7 @@ function EditarPerfil() {
       };
       const data = {
           name,
+          image
       };
 
       fetch(profile, {
@@ -45,7 +81,7 @@ function EditarPerfil() {
           }, 500);
       })
       .catch(async () => {  
-        setError("A")              
+        setError("Error")              
       });
       }
     }
@@ -65,21 +101,34 @@ function EditarPerfil() {
         </div>
       </div>
 
-      <input
-        type="file"
-        accept="image/jpg, image/jpeg, image/png"
-        ref={fileInputRef}
-        onChange={(e) => {
-          if (e.target.files && e.target.files.length > 0) {
-            setFiles([e.target.files[0]]);
-          }
-        }}
-        style={{ display: "none" }}
-      />
-      <div className="FormContainer">
-        <p>Nombre de usuario</p>
-        <input></input>
-      </div>
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept="image/jpg, image/jpeg, image/png"
+          onChange={(e) => {
+            if (e.target.files && e.target.files.length > 0) {
+              setFiles([e.target.files[0]]);
+              handleImageChange(e);
+            }
+          }}
+        />
+        <div className="FormContainer">
+          {error && <p className="error">{error}</p>}
+          <p>Nombre de usuario</p>
+          <div className="NombreEditable">
+            {isEditingName ? (
+              <input className="Nombre" value={name} onChange={(e) => handleInputChange(e, "name")} onBlur={() => setIsEditingName(false)} autoFocus/>
+              ) : (
+              <div className="NombreDisplay">
+                <span>{name || "Sin nombre"}</span>
+                <button onClick={() => setIsEditingName(true)}>
+                  {editar}
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+
       <button className="Guardar" onClick={save}>Guardar</button>
     </div>
   );

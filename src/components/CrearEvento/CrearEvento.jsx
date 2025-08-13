@@ -72,10 +72,6 @@ function CrearEvento() {
   };
   function newEvent(){
     if(!name || !description || dates[0] === "" || image=== null){
-      console.log(image)
-      console.log(name)
-      console.log(dates)
-      console.log(description)
       setError("Algún campo está vacío")
     }
     else{
@@ -103,7 +99,7 @@ function CrearEvento() {
                 }, 500);
             })
             .catch(async () => {  
-              setError("A")              
+              setError("Error")              
             });
 
         setName("");
