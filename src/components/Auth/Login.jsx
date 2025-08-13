@@ -5,7 +5,7 @@ import '../../constants'
 import { Cookies, useCookies } from 'react-cookie';
 
 function Login(){
-    const [cookies, setCookie] = useCookies(['jwt']);
+    const [cookies, setCookie] = useCookies(['JWT']);
     const naviget = useNavigate();
     const [email, setUser] = useState("");
     const [password, setPass] = useState("")

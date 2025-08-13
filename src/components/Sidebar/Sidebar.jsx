@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { Cookies, useCookies } from "react-cookie";
 import {
   calendario,
   notificacion,
@@ -15,8 +16,9 @@ import { useState } from "react";
 
 const Sidebar = ({ isOpen, setIsOpen }) => {
   let naviget = useNavigate();
-
+  const [cookies, setCookie, removeCookie] = useCookies(["JWT"]);
   function logoutSubmit() {
+    removeCookie("JWT", { path: "/" });
     naviget("/welcome");
   }
 
