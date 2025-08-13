@@ -1,21 +1,54 @@
+import { useNavigate, } from 'react-router-dom';
+import { useEffect, useState} from 'react';
+import '../../constants'
+
 
 function ListaEventos(){
-return(
-    <>
-    <div className="ListaEventos">
-        <div className="EventosPersonales">
-            <h1>Eventos creados por ti</h1>
-            {/*Recibir eventos que has creado */}
+    const [events, setEvents] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const navigate = useNavigate();
+    const url = window.url;
+
+    useEffect(() => {
+        const event = url+"/event"  
+        fetch(event)
+            .then((response) =>{
+                if(!response.ok){
+                    throw new Error("Error en la respuesta");
+                }
+                return response.json();
+            })
+            .then((data) => {
+                setEvents(events);
+                setLoading(false);
+            })
+            .catch((err) =>{
+                setError(err.message);
+                setLoading(false);
+            })
+    }, []);
+
+    return(
+        <>
+        <div className="ListaEventos">
+            <div className="EventosPersonales">
+                <h1>Eventos creados por ti</h1>
+                {/*Recibir eventos que has creado */}
+            </div>
+            <div className="EventosParticipas">
+                <h1>Eventos en los que participas</h1>
+                <ul>
+                    {events.map((event) =>(
+                        <li key={event.id}>{event.name}</li>
+                    ))}
+                </ul>
+            </div>
+            <div className="Calendario">
+                <button onClick={() => navigate('/calendario')}>Ver calendario</button>
+            </div>
         </div>
-        <div className="EventosParticipas">
-            <h1>Eventos en los que participas</h1>
-            {/*Recibir eventos que participas */}
-        </div>
-        <div className="Calendario">
-            <button>Ver calendario</button>
-        </div>
-    </div>
-    </>
-)
+        </>
+    )
 }
 export default ListaEventos;
