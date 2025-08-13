@@ -1,18 +1,24 @@
 import { useNavigate, } from 'react-router-dom';
 import { useEffect, useState} from 'react';
 import '../../constants'
-
+import { Cookies, useCookies } from "react-cookie";
 
 function ListaEventos(){
     const [events, setEvents] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [cookies, setCookies] = useCookies(["JWT"]);
     const navigate = useNavigate();
+    const jwTCookie = cookies.JWT;
     const url = window.url;
 
     useEffect(() => {
         const event = url+"/event"  
-        fetch(event)
+        fetch(event,{
+             method: 'GET', 
+             headers: {
+            'JWT': jwTCookie,
+                }})
             .then((response) =>{
                 if(!response.ok){
                     throw new Error("Error en la respuesta");

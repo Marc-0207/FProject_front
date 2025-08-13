@@ -1,1 +1,1 @@
-window.url = "https://localhost:8080/api";
+window.url = "https://127.0.0.1:8080/api";

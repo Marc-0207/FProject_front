@@ -16,7 +16,7 @@ import { useState } from "react";
 
 const Sidebar = ({ isOpen, setIsOpen }) => {
   let naviget = useNavigate();
-  const [cookies, setCookie, removeCookie] = useCookies(["JWT"]);
+  const [cookies, removeCookie] = useCookies(["JWT"]);
   function logoutSubmit() {
     removeCookie("JWT", { path: "/" });
     naviget("/welcome");
