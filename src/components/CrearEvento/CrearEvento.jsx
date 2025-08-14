@@ -2,15 +2,18 @@ import { useEffect, useState, useRef } from "react";
 import './CrearEvento.css';
 import '../../constants'
 import Compressor from 'compressorjs';
+import { Cookies, useCookies } from "react-cookie";
 
 function CrearEvento() {
   const [files, setFiles] = useState();
   const [preview, setPreview] = useState();
-  const [dates, setDates] = useState([""]);
+  const [date, setDate] = useState([""]);
   const [error, setError] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [image, setimage] = useState(null);
+  const [cookies, setCookies] = useCookies(["JWT"]);
+  const jwTCookie = cookies.JWT;
   const fileInputRef = useRef(null);
   const url = window.url;
 
@@ -26,13 +29,13 @@ function CrearEvento() {
   }, [files]);
 
   function AñadirFecha(){
-    if(dates.length===16){
+    if(date.length===16){
       setError("No puedes añadir más de 16 fechas")
       return;
     }
     else{
       setError("");
-      setDates([...dates, ""]);
+      setDate([...date, ""]);
       return(
         <input className="Calendario" type="date"/>
       )
@@ -65,28 +68,28 @@ function CrearEvento() {
       switch (type) {
           case "name": setName(value); break;
           case "description": setDescription(value); break;
-          case "fecha": setDates(value); break;
+          case "fecha": setDate(value); break;
           case "image": setimage(value); break;
           default: break;
       }
   };
   function newEvent(){
-    if(!name || !description || dates[0] === "" || image=== null){
+    if(!name || !description || date[0] === "" ){
       setError("Algún campo está vacío")
     }
     else{
-      const event = url+"/event"
+      const event = url+"/event/create"
         const headers = {
+            'JWT': jwTCookie,
             "Accept": "application/json",
             "Content-Type": "application/json"
         };
         const data = {
             name,
-            dates,
-            description,
-            image
+            date,
+            description
         };
-
+        console.log(JSON.stringify(data))
         fetch(event, {
             method: "POST",
             headers: headers,
@@ -98,13 +101,13 @@ function CrearEvento() {
                 setTimeout(() => {
                 }, 500);
             })
-            .catch(async () => {  
-              setError("Error")              
+            .catch(async (err) => {  
+              setError(err.message)              
             });
 
         setName("");
         setDescription("");
-        setDates([""]);
+        setDate([""]);
         setimage(null);
     }
   }
@@ -152,11 +155,11 @@ function CrearEvento() {
                 <button onClick={AñadirFecha}>Añadir Fecha</button>
               </div>
               <div className="FechasGrid">
-                {dates.map((fecha, i) => (
+                {date.map((fecha, i) => (
                 <input key={i} className="Calendario"type="date"value={fecha}onChange={(e) => {
-                  const nuevasFechas = [...dates];
+                  const nuevasFechas = [...date];
                   nuevasFechas[i] = e.target.value;
-                  setDates(nuevasFechas);
+                  setDate(nuevasFechas);
                 }}
               />
             ))}

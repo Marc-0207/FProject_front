@@ -16,7 +16,7 @@ export default function Footer() {
           <div className="footer-links">
             <Link to={"/"}>Mis eventos</Link>
             <Link to={"/calendario"}>Calendario</Link>
-            <Link to={"/notificaciones"}>Notificaciones</Link>
+            <Link to={"/crearevento"}>Crear evento</Link>
           </div>
         </div>
       </footer>

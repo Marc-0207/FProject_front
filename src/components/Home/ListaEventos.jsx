@@ -26,7 +26,7 @@ function ListaEventos(){
                 return response.json();
             })
             .then((data) => {
-                setEvents(events);
+                setEvents(data);
                 setLoading(false);
             })
             .catch((err) =>{
@@ -46,7 +46,7 @@ function ListaEventos(){
                 <h1>Eventos en los que participas</h1>
                 <ul>
                     {events.map((event) =>(
-                        <li key={event.id}>{event.name}</li>
+                        <li key={event.name}>{event.name}</li>
                     ))}
                 </ul>
             </div>
