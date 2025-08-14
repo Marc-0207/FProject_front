@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import './EditarPerfil.css';
 import { editar } from "../SVG";
 import Compressor from 'compressorjs';
+import { Cookies, useCookies } from "react-cookie";
 
 function EditarPerfil() {
   const [files, setFiles] = useState();
@@ -10,19 +11,34 @@ function EditarPerfil() {
   const [image, setimage] = useState(null);
   const [error, setError] = useState("");
   const [isEditingName, setIsEditingName] = useState(false);
+  const [cookies, setCookies] = useCookies(["JWT"]);
+  const jwTCookie = cookies.JWT;
   const fileInputRef = useRef(null); 
   const url = window.url;
 
-  useEffect(() => {
-    if (!files || files.length === 0) return;
 
-    const objectUrl = URL.createObjectURL(files[0]);
-    setPreview(objectUrl);
-
-    return () => {
-      URL.revokeObjectURL(objectUrl);
-    };
-  }, [files]);
+    useEffect(() => {
+        const event = url+"/profile"  
+        fetch(event,{
+             method: 'GET', 
+             headers: {
+            'JWT': jwTCookie,
+                }})
+            .then((response) =>{
+                if(!response.ok){
+                    throw new Error("Error en la respuesta");
+                }
+                return response.json();
+            })
+            .then((data) => {
+                setEvents(data);
+                setLoading(false);
+            })
+            .catch((err) =>{
+                setError(err.message);
+                setLoading(false);
+            })
+    }, []);
 
   const handleImageChange = (e) =>{
     const file = e.target.files[0];
@@ -61,12 +77,12 @@ function EditarPerfil() {
     else{
       const profile = url+"/profile"
       const headers = {
+        'JWT': jwTCookie,
         "Accept": "application/json",
         "Content-Type": "application/json"
       };
       const data = {
-          name,
-          image
+          name
       };
 
       fetch(profile, {
