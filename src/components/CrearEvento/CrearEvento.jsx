@@ -11,8 +11,9 @@ function CrearEvento() {
   const [error, setError] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [image, setimage] = useState(null);
+  const [imgFile, setImgFile] = useState([null]);
   const [cookies, setCookies] = useCookies(["JWT"]);
+  const [msg, setMsg] = useState("");
   const jwTCookie = cookies.JWT;
   const fileInputRef = useRef(null);
   const url = window.url;
@@ -42,11 +43,39 @@ function CrearEvento() {
     }
   }
 
+  function añadirImagen(){
+    console.log(imgFile.length)
+    if(imgFile.length<<=3){
+      setError("Solo puedes seleccionar un máximo de 3 imágenes")
+      return;
+    }
+    else{
+      setError("");
+      setImgFile([...imgFile, ""]);
+      return(
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept="image/jpg, image/jpeg, image/png"
+          id="imgFile"
+          className="imgFile"
+          onChange={(e) => {
+            if (e.target.files && e.target.files.length > 0) {
+              setFiles([e.target.files[0]]);
+              handleInputChange(e, "image")
+              {/*handleImageChange(e); */}
+            }
+          }}
+        />
+      )
+    }
+  }
+
   const handleImageChange = (e) =>{
     const file = e.target.files[0];
     if(!file) return;
 
-    setimage(URL.createObjectURL(file));
+    setImgFile(URL.createObjectURL(file));
 
     new Compressor(file, {
       quality: 0.85,
@@ -54,7 +83,7 @@ function CrearEvento() {
       mimeType: 'image/webp',
       success(result){
         const webpUrl = URL.createObjectURL(result);
-        setimage(webpUrl);
+        setImgFile(webpUrl);
       },
       error(err){
         console.error('Compression error: ', err.message);
@@ -69,12 +98,12 @@ function CrearEvento() {
           case "name": setName(value); break;
           case "description": setDescription(value); break;
           case "fecha": setDate(value); break;
-          case "image": setimage(value); break;
+          case "image": setImgFile(value); break;
           default: break;
       }
   };
   function newEvent(){
-    if(!name || !description || date[0] === "" ){
+    if(!name || !description || date[0] === "" || imgFile===null ){
       setError("Algún campo está vacío")
     }
     else{
@@ -89,7 +118,6 @@ function CrearEvento() {
             date,
             description
         };
-        console.log(JSON.stringify(data))
         fetch(event, {
             method: "POST",
             headers: headers,
@@ -97,20 +125,39 @@ function CrearEvento() {
         })
             .then(async (response) => {
                 if (!response.ok) throw new Error(await response.text());
-                setMsg("¡Evento creado!");
+                sendImage();
                 setTimeout(() => {
                 }, 500);
             })
             .catch(async (err) => {  
               setError(err.message)              
             });
+          }
+        }
 
-        setName("");
-        setDescription("");
-        setDate([""]);
-        setimage(null);
-    }
-  }
+      function sendImage(){
+      const secondEndpoint = url + "/image/"+name;
+      const formData = new FormData();
+      const fileInput = document.getElementById('imgFile');
+      const file = fileInput.files[0];
+
+      formData.append('imgFile', file)
+
+      const secondHeaders ={
+        'JWT': jwTCookie,
+      }
+
+      fetch(secondEndpoint, {
+        method: "POST",
+        headers: secondHeaders,
+        body: formData,
+      })
+        .then(async (response) => {
+          if (!response.ok) throw new Error(await response.text());
+          setMsg("Evento Creado!!");
+        })
+        .catch((err) => setError(err.message));
+      }
 
   return (
     <>
@@ -134,16 +181,26 @@ function CrearEvento() {
           ref={fileInputRef}
           type="file"
           accept="image/jpg, image/jpeg, image/png"
+          id="imgFile"
+          className="imgFile"
           onChange={(e) => {
             if (e.target.files && e.target.files.length > 0) {
               setFiles([e.target.files[0]]);
-              handleImageChange(e);
+              handleInputChange(e, "image")
+              {/*handleImageChange(e); */}
             }
           }}
+          
         />
+        
+          <button onClick={añadirImagen}>Añadir Imagen</button>
 
         <div className="FormContainer">
-          {error && <p className="error">{error}</p>}
+          {
+              error !== "" ?
+              <span className="error">{error}</span> :
+              <span className="success">{msg}</span>
+          }
           <div className="column">
             <p>Nombre del evento</p>
             <input className="Nombre" value={name} onChange={(e) => handleInputChange(e, "name")} /> 
