@@ -13,7 +13,29 @@ function ListaEventos(){
     const url = window.url;
 
     useEffect(() => {
-        const event = url+"/event"  
+        const event = url+"/event/oun-events"  
+        fetch(event,{
+             method: 'GET', 
+             headers: {
+            'JWT': jwTCookie,
+                }})
+            .then((response) =>{
+                if(!response.ok){
+                    throw new Error("Error en la respuesta");
+                }
+                return response.json();
+            })
+            .then((data) => {
+                setEvents(data);
+                setLoading(false);
+            })
+            .catch((err) =>{
+                setError(err.message);
+                setLoading(false);
+            })
+    }, []);
+        useEffect(() => {
+        const event = url+"/event/member-events"  
         fetch(event,{
              method: 'GET', 
              headers: {

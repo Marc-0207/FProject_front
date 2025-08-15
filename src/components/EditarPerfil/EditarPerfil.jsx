@@ -12,34 +12,30 @@ function EditarPerfil() {
   const [error, setError] = useState("");
   const [isEditingName, setIsEditingName] = useState(false);
   const [cookies, setCookies] = useCookies(["JWT"]);
+  const [loading, setLoading] = useState("");
   const jwTCookie = cookies.JWT;
   const fileInputRef = useRef(null); 
   const url = window.url;
 
 
-    useEffect(() => {
-        const event = url+"/profile"  
-        fetch(event,{
-             method: 'GET', 
-             headers: {
-            'JWT': jwTCookie,
-                }})
-            .then((response) =>{
-                if(!response.ok){
-                    throw new Error("Error en la respuesta");
-                }
-                return response.json();
-            })
-            .then((data) => {
-                setEvents(data);
-                setLoading(false);
-            })
-            .catch((err) =>{
-                setError(err.message);
-                setLoading(false);
-            })
-    }, []);
-
+useEffect(() => {
+  const event = `${url}/profile`;
+  fetch(event, {
+    method: 'GET',
+    headers: {
+      'JWT': jwTCookie
+    }
+  })
+  .then(res => {
+    if (!res.ok) throw new Error('Error en el fetch');
+    return res.json();
+  })
+  .then(data => {
+    setName(data.name);
+    setPreview(data.imageUrl);
+  })
+  .catch(err => setError(err.message));
+}, [url, jwTCookie]);
   const handleImageChange = (e) =>{
     const file = e.target.files[0];
     if(!file) return;
@@ -70,37 +66,36 @@ function EditarPerfil() {
         default: break;
     }
   };
-  function save(){
-    if(!name || image === null){
-      setError("Algún campo está vacío")
-    }
-    else{
-      const profile = url+"/profile"
-      const headers = {
-        'JWT': jwTCookie,
-        "Accept": "application/json",
-        "Content-Type": "application/json"
-      };
-      const data = {
-          name
-      };
 
-      fetch(profile, {
-          method: "PUT",
-          headers: headers,
-          body: JSON.stringify(data)
-      })
-      .then(async (response) => {
-          if (!response.ok) throw new Error(await response.text());
-          setMsg("¡Perfil editado!");
-          setTimeout(() => {
-          }, 500);
-      })
-      .catch(async () => {  
-        setError("Error")              
-      });
-      }
-    }
+function save() {
+
+  if (!name) {
+    setError("Algún campo está vacío");
+    return;
+  }
+  const profile = url + "/profile";
+
+  const headers = {
+    'JWT': jwTCookie,
+    'Accept': 'application/json',
+    'Content-Type': 'application/x-www-form-urlencoded'
+  };
+  const body = new URLSearchParams();
+  body.append("newName", name.trim());
+
+  fetch(profile, {
+    method: "PUT",
+    headers,
+    body: body.toString()
+  })
+    .then(async (response) => {
+      if (!response.ok) throw new Error(await response.text());
+      setError("¡Perfil editado!");
+    })
+    .catch(err => {
+      setError("Error: " + err.message);
+    });
+}
   return (
     <div>
       <div className="ImagenRow">
