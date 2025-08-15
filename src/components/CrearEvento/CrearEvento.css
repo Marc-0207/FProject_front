@@ -217,3 +217,33 @@ textarea:focus {
     align-self: stretch;
   }
 }
+ .popup-overlay {
+          position: fixed;
+          top:0; left:0;
+          width:100%;
+          height:100%;
+          background: rgba(0,0,0,0.5);
+          display:flex;
+          align-items:center;
+          justify-content:center;
+          z-index: 1000;
+        }
+        .popup {
+          background:white;
+          padding: 20px 30px;
+          border-radius: 10px;
+          text-align:center;
+          box-shadow: 0 0 15px rgba(0,0,0,0.3);
+        }
+        .popup button {
+          margin-top: 10px;
+          padding: 5px 15px;
+          border:none;
+          background:#007bff;
+          color:white;
+          border-radius:5px;
+          cursor:pointer;
+        }
+        .popup button:hover {
+          background:#0056b3;
+        }

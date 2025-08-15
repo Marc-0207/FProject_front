@@ -14,6 +14,8 @@ function CrearEvento() {
   const [imgFile, setImgFile] = useState([null]);
   const [cookies, setCookies] = useCookies(["JWT"]);
   const [msg, setMsg] = useState("");
+  const [popup, setPopup] = useState(false);
+  const [link, setLink] = useState("");
   const jwTCookie = cookies.JWT;
   const fileInputRef = useRef(null);
   const url = window.url;
@@ -123,13 +125,9 @@ function convertToWebp(img) {
     const secondEndpoint = url + "/image/" + name;
     const secondHeaders = { 'JWT': jwTCookie };
 
-    console.log("ImgCount: "+imgFile.length)
     for (let file of imgFile) {
-      console.log(file)
       let imgWebp = await convertToWebp(file);
-      console.log(imgWebp)
       if (imgWebp == null) {
-        console.log("Can't convert")
         continue;
       }
 
@@ -142,14 +140,42 @@ function convertToWebp(img) {
       })
         .then(async (response) => {
           if (!response.ok) throw new Error(await response.text());
-          setMsg("Evento Creado!!");
+          setPopup(true);
         })
         .catch((err) => setError(err.message));
     }
   }
 
+  function getcode(){
+    const thirdEndpoint = url + "/event/" + name;
+    const thirdHeader = {
+      'JWT' : jwTCookie
+    }
 
+    fetch(thirdEndpoint, {
+      method: "GET",
+      headers: thirdHeader,
+    })
+    .then((response) =>{
+      if(!response.ok){
+        throw new Error("Error en la respuesta");
+      }
+      return response.json();
+    })
+    .then((data) => {
+        const code = data.shareCode; 
+        setLink(code);
+        })
+      .catch((err) =>{
+      setError(err.message);
+  })
+}
 
+  useEffect(() => {
+    if (popup) {
+      getcode();
+    }
+  }, [popup]);
 
   return (
     <>
@@ -224,6 +250,15 @@ function convertToWebp(img) {
 
         <button className="CrearEvento" onClick={newEvent}>Crear Evento</button>
       </div>
+        {popup && (
+            <div className="popup-overlay">
+              <div className="popup">
+                <p>Evento Creado!!</p>
+                <p>Link: {link}</p> 
+                <button onClick={() => setPopup(false)}>Cerrar</button>
+              </div>
+            </div>
+        )}
     </>
   );
 }
