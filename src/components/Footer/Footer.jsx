@@ -17,6 +17,7 @@ export default function Footer() {
             <Link to={"/"}>Mis eventos</Link>
             <Link to={"/calendario"}>Calendario</Link>
             <Link to={"/crearevento"}>Crear evento</Link>
+            <Link to={"/joinevent"}>Unirse a un evento</Link>
           </div>
         </div>
       </footer>
