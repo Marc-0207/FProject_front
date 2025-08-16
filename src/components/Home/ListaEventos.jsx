@@ -60,7 +60,27 @@ function ListaEventos() {
     }, []);
 
     function showEvent(eventName) {
-        const eventUrl = url + "/event/" + eventName;
+        const eventUrl = url + "/oun-event/" + eventName;
+        fetch(eventUrl, {
+            method: 'GET',
+            headers: {
+                'JWT': jwTCookie,
+            }
+        })
+        .then((response) => {
+            if (!response.ok) throw new Error("Error en la respuesta");
+            return response.json();
+        })
+        .then((data) => {
+            setSelectedEvent(data);
+        })
+        .catch((err) => {
+            setError(err.message);
+        });
+    }
+
+    function showMemberEvent(eventName) {
+        const eventUrl = url + "/member-event/" + eventName;
         fetch(eventUrl, {
             method: 'GET',
             headers: {
@@ -102,7 +122,7 @@ function ListaEventos() {
                     {events.map((event) => (
                         <li
                             key={event.name}
-                            onClick={() => showEvent(event.name)}
+                            onClick={() => showMemberEvent(event.name)}
                             style={{ cursor: 'pointer' }}
                         >
                             {event.name}
@@ -126,7 +146,7 @@ function ListaEventos() {
         {selectedEvent.images && selectedEvent.images.length > 0 ? (
           <ul>
             {selectedEvent.images.map((img, idx) => (
-              <li key={idx}>{img.name}</li> // o <img src={urlBase + img.name} alt={img.name} /> si tienes URL base
+              <li key={idx}>{img.name}</li>
             ))}
           </ul>
         ) : (
