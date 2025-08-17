@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import '../../constants';
 import './ListaEventos.css';
 import { useCookies } from "react-cookie";
+import VoteElection from './VoteElection';
 
 function ListaEventos() {
     const [myevents, setMyEvents] = useState([]);
@@ -11,6 +12,9 @@ function ListaEventos() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [cookies] = useCookies(["JWT"]);
+    const [imageUrls, setImageUrls] = useState([]);
+    const [voteOptions, setVoteOptions] = useState([])
+
     const navigate = useNavigate();
     const jwTCookie = cookies.JWT;
     const url = window.url;
@@ -23,18 +27,18 @@ function ListaEventos() {
                 'JWT': jwTCookie,
             }
         })
-        .then((response) => {
-            if (!response.ok) throw new Error("Error en la respuesta");
-            return response.json();
-        })
-        .then((data) => {
-            setMyEvents(data);
-            setLoading(false);
-        })
-        .catch((err) => {
-            setError(err.message);
-            setLoading(false);
-        });
+            .then((response) => {
+                if (!response.ok) throw new Error("Error en la respuesta");
+                return response.json();
+            })
+            .then((data) => {
+                setMyEvents(data);
+                setLoading(false);
+            })
+            .catch((err) => {
+                setError(err.message);
+                setLoading(false);
+            });
     }, []);
 
     useEffect(() => {
@@ -45,136 +49,153 @@ function ListaEventos() {
                 'JWT': jwTCookie,
             }
         })
-        .then((response) => {
-            if (!response.ok) throw new Error("Error en la respuesta");
-            return response.json();
-        })
-        .then((data) => {
-            setEvents(data);
-            setLoading(false);
-        })
-        .catch((err) => {
-            setError(err.message);
-            setLoading(false);
-        });
+            .then((response) => {
+                if (!response.ok) throw new Error("Error en la respuesta");
+                return response.json();
+            })
+            .then((data) => {
+                setEvents(data);
+                setLoading(false);
+            })
+            .catch((err) => {
+                setError(err.message);
+                setLoading(false);
+            });
     }, []);
 
     function showEvent(eventName) {
-        const eventUrl = url + "/oun-event/" + eventName;
+        const eventUrl = url + "/event/" + eventName;
         fetch(eventUrl, {
             method: 'GET',
             headers: {
                 'JWT': jwTCookie,
             }
         })
-        .then((response) => {
-            if (!response.ok) throw new Error("Error en la respuesta");
-            return response.json();
-        })
-        .then((data) => {
-            setSelectedEvent(data);
-        })
-        .catch((err) => {
-            setError(err.message);
-        });
+            .then((response) => {
+                if (!response.ok) throw new Error("Error en la respuesta");
+                return response.json();
+            })
+            .then(async (data) => {
+                setSelectedEvent(data);
+
+                // Descargar imágenes (si existen)
+                if (data.images && data.images.length > 0) {
+                    const imagePromises = data.images.map(async (image) => {
+                        const res = await fetch(url + "/image/" + image.name, {
+                            headers: {
+                                'JWT': jwTCookie,
+                            }
+                        });
+                        if (!res.ok) throw new Error("Error al obtener imagen: " + image.name);
+                        const blob = await res.blob();
+                        return URL.createObjectURL(blob); // crea URL local del blob
+                    });
+
+                    const urls = await Promise.all(imagePromises);
+                    setImageUrls(urls); // guarda en estado
+                } else {
+                    setImageUrls([]); // limpia si no hay imágenes
+                }
+            })
+            .catch((err) => {
+                setError(err.message);
+            });
     }
 
-    function showMemberEvent(eventName) {
-        const eventUrl = url + "/member-event/" + eventName;
-        fetch(eventUrl, {
-            method: 'GET',
+    function vote({ target }) {
+        const voteurl = url + "/event/vote-by-id"
+        const id = target;
+        target.value += 1;
+        console.log("Valor: " + target.value)
+
+        fetch(voteurl, {
+            method: "POST",
             headers: {
                 'JWT': jwTCookie,
-            }
+            },
+            body: id,
         })
-        .then((response) => {
-            if (!response.ok) throw new Error("Error en la respuesta");
-            return response.json();
-        })
-        .then((data) => {
-            setSelectedEvent(data);
-        })
-        .catch((err) => {
-            setError(err.message);
-        });
+            .then(async (response) => {
+                if (!response.ok) throw new Error(await response.text());
+            })
+            .catch((err) => setError(err.message));
     }
 
     return (
         <>
-        <div className="ListaEventos">
-            <div className="EventosPersonales">
-                <h1>Eventos creados por ti</h1>
-                <ul>
-                    {myevents.map((event) => (
-                        <li
-                            key={event.name}
-                            onClick={() => showEvent(event.name)}
-                            style={{ cursor: 'pointer' }}
-                        >
-                            {event.name}
-                        </li>
-                    ))}
-                </ul>
+            <div className="ListaEventos">
+                <div className="EventosPersonales">
+                    <h1>Eventos creados por ti</h1>
+                    <ul>
+                        {myevents.map((event) => (
+                            <li
+                                key={event.name}
+                                onClick={() => showEvent(event.name)}
+                                style={{ cursor: 'pointer' }}
+                            >
+                                {event.name}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+                <div className="EventosParticipas">
+                    <h1>Eventos en los que participas</h1>
+                    <ul>
+                        {events.map((event) => (
+                            <li
+                                key={event.name}
+                                onClick={() => showEvent(event.name)}
+                                style={{ cursor: 'pointer' }}
+                            >
+                                {event.name}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+                <div className="Calendario">
+                    <button onClick={() => navigate('/calendario')}>Ver calendario</button>
+                </div>
             </div>
-            <div className="EventosParticipas">
-                <h1>Eventos en los que participas</h1>
-                <ul>
-                    {events.map((event) => (
-                        <li
-                            key={event.name}
-                            onClick={() => showMemberEvent(event.name)}
-                            style={{ cursor: 'pointer' }}
-                        >
-                            {event.name}
-                        </li>
-                    ))}
-                </ul>
-            </div>
-            <div className="Calendario">
-                <button onClick={() => navigate('/calendario')}>Ver calendario</button>
-            </div>
-        </div>
 
-{selectedEvent && (
-  <div className="popup-overlay">
-    <div className="popup-box">
-      <h2>{selectedEvent.name}</h2>
-      <p><strong>Descripción:</strong> {selectedEvent.description}</p>
+            {selectedEvent && (
+                <div className="popup-overlay">
+                    <div className="popup-box">
+                        <h2>{selectedEvent.name}</h2>
+                        <p><strong>Descripción:</strong> {selectedEvent.description}</p>
+                        <div>
+                            <strong>Fotos:</strong>
+                            {imageUrls.length > 0 ? (
+                                <ul>
+                                    {imageUrls.map((src, idx) => (
+                                        <li key={idx}>
+                                            <img src={src} width={100} height={100} loading='eager' />
+                                        </li>
+                                    ))}
+                                </ul>
+                            ) : (
+                                <p>No hay imágenes</p>
+                            )}
+                        </div>
 
-      <div>
-        <strong>Fotos:</strong>
-        {selectedEvent.images && selectedEvent.images.length > 0 ? (
-          <ul>
-            {selectedEvent.images.map((img, idx) => (
-              <li key={idx}>{img.name}</li>
-            ))}
-          </ul>
-        ) : (
-          <p>No hay imágenes</p>
-        )}
-      </div>
+                        <div>
+                            <strong>Votos:</strong>
+                            {selectedEvent.elections && selectedEvent.elections.length > 0 ? (
+                                <ul>
+                                    {selectedEvent.elections.map((election) => (
+                                        <VoteElection election = {election}/>
+                                    ))}
+                                </ul>
+                            ) : (
+                                <p>No hay elecciones</p>
+                            )}
+                        </div>
 
-      <div>
-        <strong>Votos:</strong>
-        {selectedEvent.elections && selectedEvent.elections.length > 0 ? (
-          <ul>
-            {selectedEvent.elections.map((election) => (
-              <li key={election.id}>
-                Fecha: {election.date}, Votos: {election.count}
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>No hay elecciones</p>
-        )}
-      </div>
+                        <p><strong>Invitados:</strong> {selectedEvent.members ? selectedEvent.members.length : 0}</p>
 
-      <p><strong>Invitados:</strong> {selectedEvent.members ? selectedEvent.members.length : 0}</p>
-
-      <button onClick={() => setSelectedEvent(null)}>Cerrar</button>
-    </div>
-  </div>
-)}
+                        <button onClick={() => setSelectedEvent(null)}>Cerrar</button>
+                    </div>
+                </div>
+            )}
         </>
     );
 }
