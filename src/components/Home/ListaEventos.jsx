@@ -125,7 +125,12 @@ function ListaEventos() {
         <>
             <div className="ListaEventos">
                 <div className="EventosPersonales">
+                    <div className='asdf'>
                     <h1>Eventos creados por ti</h1>
+                        <button className='asdfB' onClick={() => navigate('/crearevento')}>
+                            Crear evento
+                        </button>
+                    </div>
                     <ul>
                         {myevents.map((event) => (
                             <li
@@ -139,7 +144,12 @@ function ListaEventos() {
                     </ul>
                 </div>
                 <div className="EventosParticipas">
-                    <h1>Eventos en los que participas</h1>
+                    <div className='asdf'>
+                        <h1>Eventos en los que participas</h1>
+                        <button className='asdfB' onClick={() => navigate('/joinevent')}>
+                            Unirse a evento
+                        </button>
+                    </div>
                     <ul>
                         {events.map((event) => (
                             <li
