@@ -4,84 +4,150 @@ h1 {
   margin: 2rem 0 1rem;
   font-size: 2rem;
   color: #333;
+  font-weight: 700;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Input de archivo - centrado */
+/* Botón Añadir Imagen centrado */
+.btn-centro {
+  display: block;
+  margin: 0 auto 1.5rem auto;
+  padding: 0.5rem 1rem;
+  background-color: #2196f3;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+  max-width: 150px;
+  text-align: center;
+}
+
+.btn-centro:hover {
+  background-color: #1976d2;
+}
+
+/* Input de archivo centrado (si lo usas) */
 input[type="file"] {
   display: block;
   margin: 0 auto 1.5rem;
   font-size: 1rem;
 }
 
-/* Imagen previa */
-.ImagenContainer {
+/* Imagen previa - contenedor general */
+.EventoImagenRow {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+/* Contenedor individual de imagen */
+.EventoImagenContainer {
+  width: 120px;
+  height: 120px;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
+  position: relative;
+  cursor: pointer;
 }
 
-/* Imagen previa cargada */
-.PreviewImage {
+/* Imagen previa cargada - cuadrada */
+.EventoPreviewImage {
   width: 120px;
   height: 120px;
   object-fit: cover;
-  border-radius: 50%;
+  border-radius: 8px !important;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
 }
 
-/* Círculo placeholder antes de subir imagen */
-.PlaceholderCircle {
+.EventoPreviewImage:hover {
+  transform: scale(1.05);
+}
+
+/* Placeholder cuadrado antes de subir imagen */
+.EventoPlaceholder {
   width: 120px;
   height: 120px;
-  border-radius: 50%;
+  border-radius: 8px;
   background-color: #f0f0f0;
   border: 2px dashed #ccc;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.EventoPlaceholder:hover {
+  background-color: #eaeaea;
+  border-color: #999;
 }
 
 /* Formulario general */
-.FormContainer {
+.EventoFormContainer {
   max-width: 700px;
   margin: 2rem auto;
   padding: 2rem;
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+
+  /* Cambiamos grid a flex columna */
+  display: flex;
+  flex-direction: column;
   gap: 2rem;
   box-sizing: border-box;
 }
 
-/* Columnas */
-.column {
+/* Nueva clase para columna única */
+.column-single {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 1rem;
 }
 
-/* Textos del formulario */
-.FormContainer p {
+/* Bloque Nombre del evento con input centrado y ancho */
+.nombre-evento {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.nombre-evento input {
+  width: 80%;
+  max-width: 400px;
+  box-sizing: border-box;
+  margin: 0 auto;   /* Centrado horizontal */
+  display: block;   /* Para que margin auto funcione */
+}
+
+/* Texto en el formulario */
+.EventoFormContainer p {
   margin: 0;
   font-weight: 600;
   color: #333;
   font-size: 1rem;
+  width: 100%;
+  text-align: center; /* Centrar el texto del label */
 }
 
-/* Inputs y textarea */
-.Nombre,
-.Duracion,
-.Calendario,
-.Hora,
-textarea {
-  width: 100%;
+/* Inputs y textarea dentro de columnas */
+.column-single input,
+.column-single textarea {
+  width: 80%;
+  max-width: 400px;
   padding: 0.75rem 1rem;
   font-size: 1rem;
   border: 1px solid #ccc;
   border-radius: 6px;
   outline: none;
-  transition: border-color 0.3s ease;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
   font-family: inherit;
   box-sizing: border-box;
 }
@@ -92,21 +158,20 @@ textarea {
   min-height: 100px;
 }
 
-/* Focus states */
-.Nombre:focus,
+.EventoNombre:focus,
 .Duracion:focus,
 .Calendario:focus,
 .Hora:focus,
 textarea:focus {
   border-color: #2196f3;
-  box-shadow: 0 0 5px rgba(33, 150, 243, 0.5);
+  box-shadow: 0 0 8px rgba(33, 150, 243, 0.3);
 }
 
 /* Contenedor de fechas */
 .Fechas {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.5rem;  /* Más separación vertical */
   border: 1px solid #eee;
   border-radius: 6px;
   padding: 1rem;
@@ -121,10 +186,9 @@ textarea:focus {
   margin-bottom: 0.5rem;
 }
 
-/* Grid de fechas en dos columnas */
 .FechasGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* mínimo 200px */
   gap: 0.75rem 1rem;
   max-height: 300px;
   overflow-y: auto;
@@ -132,7 +196,6 @@ textarea:focus {
   scrollbar-color: #ccc transparent;
 }
 
-/* Scrollbar WebKit (opcional) */
 .FechasGrid::-webkit-scrollbar {
   width: 6px;
 }
@@ -142,7 +205,10 @@ textarea:focus {
   border-radius: 3px;
 }
 
-/* Input de calendario */
+.FechasGrid::-webkit-scrollbar-track {
+  background: transparent;
+}
+
 .Calendario {
   width: 100%;
   padding: 0.65rem 0.75rem;
@@ -152,7 +218,6 @@ textarea:focus {
   box-sizing: border-box;
 }
 
-/* Botón añadir fecha */
 .Fechas button {
   padding: 0.4rem 0.9rem;
   font-size: 0.85rem;
@@ -160,16 +225,22 @@ textarea:focus {
   border: 1px solid #bbb;
   border-radius: 4px;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
 .Fechas button:hover {
   background-color: #e2e2e2;
+  transform: translateY(-1px);
 }
 
-/* Mensaje de error */
-.Fechas .error {
+.EventoError {
   color: red;
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+}
+
+.EventoSuccess {
+  color: green;
   font-size: 0.85rem;
   margin-top: 0.5rem;
 }
@@ -188,19 +259,21 @@ textarea:focus {
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.2s ease;
   box-shadow: 0 3px 8px rgba(33, 150, 243, 0.4);
 }
 
 .CrearEvento:hover {
   background-color: #1976d2;
+  transform: translateY(-2px);
 }
 
 /* Responsive */
 @media (max-width: 700px) {
-  .FormContainer {
+  .EventoFormContainer {
     display: flex;
     flex-direction: column;
+    padding: 1rem;  /* Menor padding en móvil */
   }
 
   .CrearEvento {
@@ -217,33 +290,71 @@ textarea:focus {
     align-self: stretch;
   }
 }
- .popup-overlay {
-          position: fixed;
-          top:0; left:0;
-          width:100%;
-          height:100%;
-          background: rgba(0,0,0,0.5);
-          display:flex;
-          align-items:center;
-          justify-content:center;
-          z-index: 1000;
-        }
-        .popup {
-          background:white;
-          padding: 20px 30px;
-          border-radius: 10px;
-          text-align:center;
-          box-shadow: 0 0 15px rgba(0,0,0,0.3);
-        }
-        .popup button {
-          margin-top: 10px;
-          padding: 5px 15px;
-          border:none;
-          background:#007bff;
-          color:white;
-          border-radius:5px;
-          cursor:pointer;
-        }
-        .popup button:hover {
-          background:#0056b3;
-        }
+
+/* Overlay del popup: fondo oscuro semitransparente */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6); /* más opaco para mejor legibilidad */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+/* Popup principal */
+.popup {
+  background-color: #fff;
+  padding: 2rem 3rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Texto dentro del popup */
+.popup p {
+  margin: 0.8rem 0;
+  color: #333;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+/* Botones del popup */
+.popup button {
+  margin: 0.8rem 0.5rem 0 0.5rem;
+  padding: 0.55rem 1.4rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.2s ease;
+  box-shadow: 0 3px 8px rgba(33, 150, 243, 0.4);
+  color: white;
+}
+
+/* Botón Copiar - color azul */
+.popup button:first-of-type {
+  background-color: #2196f3;
+}
+
+.popup button:first-of-type:hover {
+  background-color: #1976d2;
+  box-shadow: 0 4px 12px rgba(25, 118, 210, 0.6);
+}
+
+/* Botón Cerrar - color rojo */
+.popup button:last-of-type {
+  background-color: #f44336;
+}
+
+.popup button:last-of-type:hover {
+  background-color: #d32f2f;
+  box-shadow: 0 4px 12px rgba(211, 47, 47, 0.6);
+}
