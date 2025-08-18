@@ -44,3 +44,6 @@ h4{
   justify-content: end;
   width: 100%;
 }
+.hide{
+  display: none;
+}

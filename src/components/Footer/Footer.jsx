@@ -12,14 +12,27 @@ export default function Footer() {
         <div>
           <img src={logo} alt="" srcSet="" className="logo-footer" />
         </div>
-        <div className="footer-links-container">
-          <div className="footer-links">
-            <Link to={"/"}>Mis eventos</Link>
-            <Link to={"/calendario"}>Calendario</Link>
-            <Link to={"/crearevento"}>Crear evento</Link>
-            <Link to={"/joinevent"}>Unirse a un evento</Link>
+        {location.pathname == "/welcome" ||
+        location.pathname == "/login" ||
+        location.pathname == "/register" ? (
+          <div className="footer-links-container hide">
+            <div className="footer-links">
+              <Link to={"/"}>Mis eventos</Link>
+              <Link to={"/calendario"}>Calendario</Link>
+              <Link to={"/crearevento"}>Crear evento</Link>
+              <Link to={"/joinevent"}>Unirse a un evento</Link>
+            </div>
           </div>
-        </div>
+        ) : (
+          <div className="footer-links-container">
+            <div className="footer-links">
+              <Link to={"/"}>Mis eventos</Link>
+              <Link to={"/calendario"}>Calendario</Link>
+              <Link to={"/crearevento"}>Crear evento</Link>
+              <Link to={"/joinevent"}>Unirse a un evento</Link>
+            </div>
+          </div>
+        )}
       </footer>
     </>
   );
