@@ -159,7 +159,7 @@ function CrearEvento() {
   return (
     <>
       <div>
-        <h1>NUEVO EVENTO</h1>
+        <h1 className="NS">NUEVO EVENTO</h1>
         <div className="EventoImagenRow">
           {imgFile.map((file, index) => {
             const previewUrl = file ? URL.createObjectURL(file) : null;
@@ -200,7 +200,7 @@ function CrearEvento() {
     <span className="success">{msg}</span>
   }
   <div className="column column-single">
-    <p>Nombre del evento</p>
+    <p className="NS">Nombre del evento</p>
     <input
       className="EventoNombre"
       value={name}
@@ -210,8 +210,8 @@ function CrearEvento() {
 
     <div className="Fechas" style={{ marginTop: '1.5rem' }}>
       <div className="FechasHeader">
-        <p>Fecha/s</p>
-        <button onClick={AñadirFecha}>Añadir Fecha</button>
+        <p  className="NS">Fecha/s</p>
+        <button className="NS" onClick={AñadirFecha}>Añadir Fecha</button>
       </div>
       <div className="FechasGrid">
         {date.map((fecha, i) => (
@@ -230,7 +230,7 @@ function CrearEvento() {
       </div>
     </div>
 
-    <p style={{ marginTop: '1.5rem' }}>Descripción</p>
+    <p   className="NS" style={{ marginTop: '1.5rem' }}>Descripción</p>
     <textarea
       value={description}
       onChange={(e) => handleInputChange(e, "description")}

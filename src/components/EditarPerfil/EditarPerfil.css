@@ -1,5 +1,6 @@
 /* --- Contenedor principal centrado vertical y horizontal --- */
 .EditarPerfil {
+  user-select: none;
   display: flex;
   flex-direction: column;
   align-items: center;    /* Centra horizontalmente */

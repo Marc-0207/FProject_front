@@ -53,6 +53,7 @@ li:hover {
 /* Calendario */
 .Calendario {
   margin-top: 20px;
+  user-select:none;
 }
 
 .Calendario button {
@@ -72,6 +73,7 @@ li:hover {
 
 /* Popup Overlay */
 .popup-overlay {
+  user-select: none;
   position: fixed;
   top: 0;
   left: 0;
@@ -133,4 +135,10 @@ li:hover {
     opacity: 1;
     transform: translateY(0);
   }
+}
+.NS{
+  user-select:none;
+}
+.SS{
+  user-select:all;
 }

@@ -76,6 +76,7 @@ function ListaEventos() {
             })
             .then(async (data) => {
                 setSelectedEvent(data);
+                console.log(data)
 
                 if (data.images && data.images.length > 0) {
                     const imagePromises = data.images.map(async (image) => {
@@ -103,8 +104,8 @@ function ListaEventos() {
         <>
             <div className="ListaEventos">
                 <div className="EventosPersonales">
-                    <h1>Eventos creados por ti</h1>
-                    <ul>
+                    <h1 className='NS'>Eventos creados por ti</h1>
+                    <ul className='NS'>
                         {myevents.map((event) => (
                             <li
                                 key={event.name}
@@ -117,8 +118,8 @@ function ListaEventos() {
                     </ul>
                 </div>
                 <div className="EventosParticipas">
-                    <h1>Eventos en los que participas</h1>
-                    <ul>
+                    <h1 className='NS'>Eventos en los que participas</h1>
+                    <ul className='NS'>
                         {events.map((event) => (
                             <li
                                 key={event.name}
@@ -169,7 +170,11 @@ function ListaEventos() {
                         </div>
 
                         <p><strong>Invitados:</strong> {selectedEvent.members ? selectedEvent.members.length : 0}</p>
-
+                        {selectedEvent.shareCode && (
+                            <p>
+                                Código evento: <strong className="SS">{selectedEvent.shareCode}</strong>
+                            </p>
+                            )}
                         <button onClick={() => setSelectedEvent(null)}>Cerrar</button>
                     </div>
                 </div>

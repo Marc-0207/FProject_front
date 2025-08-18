@@ -33,6 +33,7 @@ header {
 .perfil {
   display: flex;
   align-items: center;
+  user-select:none;
 }
 
 /* Estilo para el enlace de perfil */
