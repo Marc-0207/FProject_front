@@ -16,18 +16,14 @@
   width: 100%;
   max-width: 600px;
   background-color: #fff;
-  align-items: center;
-  align-items: stretch;
-  padding: 10px 30px;
   border-radius: 12px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
 .EventosPersonales h1,
 .EventosParticipas h1 {
+  margin: 15 0;
   font-size: 22px;
-  margin-bottom: 15px;
-  flex-grow: 0;
   color: #2c3e50;
 }
 
@@ -61,12 +57,13 @@ li:hover {
 .Calendario button,
 .EventosPersonales button,
 .EventosParticipas button {
-  padding:15px 15px;
+  flex: none;
+  margin: auto 0;
+  display: inline-block;
   background-color: #3498db;
   border: none;
   color: white;
   font-weight: bold;
-  border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
@@ -79,14 +76,7 @@ li:hover {
 
 .asdf{
   display: flex;
-  flex-direction: row;
   justify-content: space-around;
-}
-
-.asdf button{
-  display: flex;
-  justify-content: center;
-  justify-content: flex-end;
 }
 
 /* Popup Overlay */
