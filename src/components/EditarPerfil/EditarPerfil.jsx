@@ -1,19 +1,17 @@
 import { useEffect, useRef, useState } from "react";
 import './EditarPerfil.css';
 import { editar } from "../SVG";
-import Compressor from 'compressorjs';
 import { useCookies } from "react-cookie";
+import { useNavigate } from 'react-router-dom';
 
 function EditarPerfil() {
-  const [files, setFiles] = useState();
   const [preview, setPreview] = useState();
   const [name, setName] = useState("");
-  const [image, setimage] = useState(null);
   const [error, setError] = useState("");
   const [isEditingName, setIsEditingName] = useState(false);
   const [cookies] = useCookies(["JWT"]);
+  const naviget = useNavigate();
   const jwTCookie = cookies.JWT;
-  const fileInputRef = useRef(null); 
   const url = window.url;
 
   useEffect(() => {
@@ -33,25 +31,6 @@ function EditarPerfil() {
       .catch(err => setError(err.message));
   }, [url, jwTCookie]);
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-
-    setimage(URL.createObjectURL(file));
-
-    new Compressor(file, {
-      quality: 0.85,
-      convertSize: 0,
-      mimeType: 'image/webp',
-      success(result) {
-        const webpUrl = URL.createObjectURL(result);
-        setimage(webpUrl);
-      },
-      error(err) {
-        console.error('Compression error: ', err.message);
-      }
-    });
-  };
 
   const handleInputChange = (e, type) => {
     const value = e.target.value;
@@ -59,7 +38,6 @@ function EditarPerfil() {
 
     switch (type) {
       case "name": setName(value); break;
-      case "image": setimage(value); break;
       default: break;
     }
   };
@@ -87,37 +65,15 @@ function EditarPerfil() {
       .then(async (response) => {
         if (!response.ok) throw new Error(await response.text());
         setError("¡Perfil editado!");
+        setTimeout(() =>{
+          naviget("/");
+        }, 1000)
       })
       .catch(err => setError("Error: " + err.message));
   }
 
   return (
-    <div>
-      <div className="PerfilImagenRow">
-        <div
-          className="PerfilImagenContainer"
-          onClick={() => fileInputRef.current.click()}
-        >
-          {preview ? (
-            <img src={preview} className="PerfilPreviewImage" alt="Preview" />
-          ) : (
-            <div className="PerfilPlaceholder"></div>
-          )}
-        </div>
-      </div>
-
-      <input
-        ref={fileInputRef}
-        type="file"
-        accept="image/jpg, image/jpeg, image/png"
-        onChange={(e) => {
-          if (e.target.files && e.target.files.length > 0) {
-            setFiles([e.target.files[0]]);
-            handleImageChange(e);
-          }
-        }}
-      />
-
+    <div className="EditarPerfil">
       <div className="PerfilFormContainer">
         {error && <p className="PerfilError">{error}</p>}
         <p>Nombre de usuario</p>
