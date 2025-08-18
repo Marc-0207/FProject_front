@@ -1,8 +1,8 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import './CrearEvento.css';
-import '../../constants'
+import '../../constants';
 import Compressor from 'compressorjs';
-import { Cookies, useCookies } from "react-cookie";
+import { useCookies } from "react-cookie";
 import { useNavigate } from 'react-router-dom';
 
 function CrearEvento() {
@@ -22,27 +22,17 @@ function CrearEvento() {
 
   useEffect(() => {
     if (!imgFile || !imgFile[0]) return;
-
     const objectUrl = URL.createObjectURL(imgFile[0]);
     setPreview(objectUrl);
-
-    return () => {
-      URL.revokeObjectURL(objectUrl);
-    };
+    return () => URL.revokeObjectURL(objectUrl);
   }, [imgFile]);
-
 
   function AñadirFecha() {
     if (date.length === 16) {
-      setError("No puedes añadir más de 16 fechas")
-      return;
-    }
-    else {
+      setError("No puedes añadir más de 16 fechas");
+    } else {
       setError("");
       setDate([...date, ""]);
-      return (
-        <input className="Calendario" type="date" />
-      )
     }
   }
 
@@ -55,29 +45,27 @@ function CrearEvento() {
     setImgFile([...imgFile, null]);
   }
 
-function convertToWebp(img) {
-  return new Promise((resolve, reject) => {
-    if (!img) return resolve(null);
-    
-    new Compressor(img, {
-      quality: 0.85,
-      convertSize: 0,
-      mimeType: 'image/webp',
-      success(result) {
-        resolve(result);
-      },
-      error(err) {
-        console.error('Compression error: ', err.message);
-        resolve(null); 
-      }
+  function convertToWebp(img) {
+    return new Promise((resolve) => {
+      if (!img) return resolve(null);
+      new Compressor(img, {
+        quality: 0.85,
+        convertSize: 0,
+        mimeType: 'image/webp',
+        success(result) {
+          resolve(result);
+        },
+        error(err) {
+          console.error('Compression error: ', err.message);
+          resolve(null);
+        }
+      });
     });
-  });
-}
+  }
 
   const handleInputChange = (e, type) => {
     const value = e.target.value;
     setError("");
-
     switch (type) {
       case "name": setName(value); break;
       case "description": setDescription(value); break;
@@ -86,43 +74,30 @@ function convertToWebp(img) {
       default: break;
     }
   };
+
   function newEvent() {
     if (!name || !description || date[0] === "") {
       setError("Algún campo está vacío");
       return;
     }
-
-    else {
-      const event = url + "/event/create"
-      const headers = {
-        'JWT': jwTCookie,
-        "Accept": "application/json",
-        "Content-Type": "application/json"
-      };
-      const data = {
-        name,
-        date,
-        description
-      };
-      fetch(event, {
-        method: "POST",
-        headers: headers,
-        body: JSON.stringify(data)
+    const event = url + "/event/create";
+    const headers = {
+      'JWT': jwTCookie,
+      "Accept": "application/json",
+      "Content-Type": "application/json"
+    };
+    const data = { name, date, description };
+    fetch(event, {
+      method: "POST",
+      headers,
+      body: JSON.stringify(data)
+    })
+      .then(async (response) => {
+        if (!response.ok) throw new Error(await response.text());
+        await sendImage();
+        if (!popup) setPopup(true);
       })
-        .then(async (response) => {
-          if (!response.ok) throw new Error(await response.text());
-          sendImage();
-          setTimeout(() => {
-          }, 500);
-          if(!popup){
-            setPopup(true);
-          }
-        })
-        
-        .catch(async (err) => {
-          setError(err.message)
-        });
-    }
+      .catch(err => setError(err.message));
   }
 
   async function sendImage() {
@@ -131,9 +106,7 @@ function convertToWebp(img) {
 
     for (let file of imgFile) {
       let imgWebp = await convertToWebp(file);
-      if (imgWebp == null) {
-        continue;
-      }
+      if (!imgWebp) continue;
 
       let formData = new FormData();
       formData.append(`imgFile`, imgWebp);
@@ -144,80 +117,62 @@ function convertToWebp(img) {
       })
         .then(async (response) => {
           if (!response.ok) throw new Error(await response.text());
-          if(!popup){
-            setPopup(true);
-          }
         })
         .catch((err) => setError(err.message));
     }
   }
 
-  function getcode(){
+  function getcode() {
     const thirdEndpoint = url + "/event/" + name;
-    const thirdHeader = {
-      'JWT' : jwTCookie
-    }
+    const thirdHeader = { 'JWT': jwTCookie };
 
     fetch(thirdEndpoint, {
       method: "GET",
       headers: thirdHeader,
     })
-    .then((response) =>{
-      if(!response.ok){
-        throw new Error("Error en la respuesta");
-      }
-      return response.json();
-    })
-    .then((data) => {
-        const code = data.shareCode; 
-        setLink(code);
-        })
-      .catch((err) =>{
-      setError(err.message);
-  })
-}
+      .then((response) => {
+        if (!response.ok) throw new Error("Error en la respuesta");
+        return response.json();
+      })
+      .then((data) => setLink(data.shareCode))
+      .catch((err) => setError(err.message));
+  }
+
   useEffect(() => {
-    if (popup) {
-      getcode();
-    }
+    if (popup) getcode();
   }, [popup]);
 
-  function goback(){
-    setPopup(false)
+  function goback() {
+    setPopup(false);
     naviget("/");
   }
 
-  function copiar(){
+  function copiar() {
     navigator.clipboard.writeText(link)
-    .then(() =>{
-      setMsg("Link copiado")
-      setTimeout(() => setMsg(""), 2000)
-    })
-    .catch(err =>{
-      setMsg("Error al copiar")
-    })
+      .then(() => {
+        setMsg("Link copiado");
+        setTimeout(() => setMsg(""), 2000);
+      })
+      .catch(() => setMsg("Error al copiar"));
   }
 
   return (
     <>
       <div>
-        <div>
-          <h1>NUEVO EVENTO</h1>
-        </div>
-        <div className="ImagenRow">
+        <h1 className="NS">NUEVO EVENTO</h1>
+        <div className="EventoImagenRow">
           {imgFile.map((file, index) => {
             const previewUrl = file ? URL.createObjectURL(file) : null;
             return (
               <div
                 key={index}
-                className="ImagenContainer"
+                className="EventoImagenContainer"
                 onClick={() => document.getElementById(`fileInput-${index}`).click()}
-                style={{ cursor: "pointer" }}
               >
                 {previewUrl ? (
-                  <img src={previewUrl} className="PreviewImage" alt={`Preview ${index}`} />
+                  <img src={previewUrl} className="EventoPreviewImage" alt={`Preview ${index}`} />
                 ) : (
-                  <div className="PlaceholderCircle"></div>
+                  <div className="EventoPlaceholder"></div>
                 )}
                 <input
                   id={`fileInput-${index}`}
@@ -236,52 +191,68 @@ function convertToWebp(img) {
             );
           })}
         </div>
-        <button onClick={añadirImagen}>Añadir Imagen</button>
-        <div className="FormContainer">
-          {
-            error !== "" ?
-              <span className="error">{error}</span> :
-              <span className="success">{msg}</span>
-          }
-          <div className="column">
-            <p>Nombre del evento</p>
-            <input className="Nombre" value={name} onChange={(e) => handleInputChange(e, "name")} />
-          </div>
-          <div className="column">
-            <div className="Fechas">
-              <div className="FechasHeader">
-                <p>Fecha/s</p>
-                <button onClick={AñadirFecha}>Añadir Fecha</button>
-              </div>
-              <div className="FechasGrid">
-                {date.map((fecha, i) => (
-                  <input key={i} className="Calendario" type="date" value={fecha} onChange={(e) => {
-                    const nuevasFechas = [...date];
-                    nuevasFechas[i] = e.target.value;
-                    setDate(nuevasFechas);
-                  }}
-                  />
-                ))}
-              </div>
-            </div>
-            <p>Descripción</p>
-            <input value={description} onChange={(e) => handleInputChange(e, "description")} />
-          </div>
-        </div>
+        <button className="btn-centro" onClick={añadirImagen}>Añadir Imagen</button>
+
+<div className="EventoFormContainer">
+  {
+    error !== "" ?
+    <span className="error">{error}</span> :
+    <span className="success">{msg}</span>
+  }
+  <div className="column column-single">
+    <p className="NS">Nombre del evento</p>
+    <input
+      className="EventoNombre"
+      value={name}
+      onChange={(e) => handleInputChange(e, "name")}
+      placeholder="Nombre del evento"
+    />
+
+    <div className="Fechas" style={{ marginTop: '1.5rem' }}>
+      <div className="FechasHeader">
+        <p  className="NS">Fecha/s</p>
+        <button className="NS" onClick={AñadirFecha}>Añadir Fecha</button>
+      </div>
+      <div className="FechasGrid">
+        {date.map((fecha, i) => (
+          <input
+            key={i}
+            className="Calendario"
+            type="date"
+            value={fecha}
+            onChange={(e) => {
+              const nuevasFechas = [...date];
+              nuevasFechas[i] = e.target.value;
+              setDate(nuevasFechas);
+            }}
+          />
+        ))}
+      </div>
+    </div>
+
+    <p   className="NS" style={{ marginTop: '1.5rem' }}>Descripción</p>
+    <textarea
+      value={description}
+      onChange={(e) => handleInputChange(e, "description")}
+      placeholder="Descripción del evento"
+    />
+  </div>
+</div>
 
         <button className="CrearEvento" onClick={newEvent}>Crear Evento</button>
       </div>
-        {popup && (
-            <div className="popup-overlay">
-              <div className="popup">
-                <p>{msg}</p>
-                <p>Evento Creado!!</p>
-                <p>Link: {link}</p> 
-                <button onClick={copiar}>Copiar</button>
-                <button onClick={goback}>Cerrar</button>
-              </div>
-            </div>
-        )}
+
+      {popup && (
+        <div className="popup-overlay">
+          <div className="popup">
+            <p>{msg}</p>
+            <p>Evento Creado!!</p>
+            <p>Link: {link}</p>
+            <button onClick={copiar}>Copiar</button>
+            <button onClick={goback}>Cerrar</button>
+          </div>
+        </div>
+      )}
     </>
   );
 }

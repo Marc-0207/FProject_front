@@ -13,7 +13,6 @@ function ListaEventos() {
     const [error, setError] = useState(null);
     const [cookies] = useCookies(["JWT"]);
     const [imageUrls, setImageUrls] = useState([]);
-    const [voteOptions, setVoteOptions] = useState([])
 
     const navigate = useNavigate();
     const jwTCookie = cookies.JWT;
@@ -77,8 +76,8 @@ function ListaEventos() {
             })
             .then(async (data) => {
                 setSelectedEvent(data);
+                console.log(data)
 
-                // Descargar imágenes (si existen)
                 if (data.images && data.images.length > 0) {
                     const imagePromises = data.images.map(async (image) => {
                         const res = await fetch(url + "/image/" + image.name, {
@@ -88,39 +87,19 @@ function ListaEventos() {
                         });
                         if (!res.ok) throw new Error("Error al obtener imagen: " + image.name);
                         const blob = await res.blob();
-                        return URL.createObjectURL(blob); // crea URL local del blob
+                        return URL.createObjectURL(blob); 
                     });
 
                     const urls = await Promise.all(imagePromises);
-                    setImageUrls(urls); // guarda en estado
+                    setImageUrls(urls); 
                 } else {
-                    setImageUrls([]); // limpia si no hay imágenes
+                    setImageUrls([]); 
                 }
             })
             .catch((err) => {
                 setError(err.message);
             });
     }
-
-    function vote({ target }) {
-        const voteurl = url + "/event/vote-by-id"
-        const id = target;
-        target.value += 1;
-        console.log("Valor: " + target.value)
-
-        fetch(voteurl, {
-            method: "POST",
-            headers: {
-                'JWT': jwTCookie,
-            },
-            body: id,
-        })
-            .then(async (response) => {
-                if (!response.ok) throw new Error(await response.text());
-            })
-            .catch((err) => setError(err.message));
-    }
-
     return (
         <>
             <div className="ListaEventos">
@@ -131,11 +110,11 @@ function ListaEventos() {
                             Crear evento
                         </button>
                     </div>
-                    <ul>
+                    <ul className='NS'>
                         {myevents.map((event) => (
                             <li
                                 key={event.name}
-                                onClick={() => showEvent(event.name)}
+                                onClick={() => showEvent(event.id)}
                                 style={{ cursor: 'pointer' }}
                             >
                                 {event.name}
@@ -150,11 +129,11 @@ function ListaEventos() {
                             Unirse a evento
                         </button>
                     </div>
-                    <ul>
+                    <ul className='NS'>
                         {events.map((event) => (
                             <li
                                 key={event.name}
-                                onClick={() => showEvent(event.name)}
+                                onClick={() => showEvent(event.id)}
                                 style={{ cursor: 'pointer' }}
                             >
                                 {event.name}
@@ -201,7 +180,11 @@ function ListaEventos() {
                         </div>
 
                         <p><strong>Invitados:</strong> {selectedEvent.members ? selectedEvent.members.length : 0}</p>
-
+                        {selectedEvent.shareCode && (
+                            <p>
+                                Código evento: <strong className="SS">{selectedEvent.shareCode}</strong>
+                            </p>
+                            )}
                         <button onClick={() => setSelectedEvent(null)}>Cerrar</button>
                     </div>
                 </div>

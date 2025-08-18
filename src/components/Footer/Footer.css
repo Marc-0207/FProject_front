@@ -1,8 +1,9 @@
 .footer{
+  user-select: none;
   width: 100%;
   padding: 30px 40px;
   display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   background-color: gainsboro;
   box-sizing: border-box;
   position: static;
