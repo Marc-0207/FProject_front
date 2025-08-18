@@ -108,7 +108,7 @@ function ListaEventos() {
                         {myevents.map((event) => (
                             <li
                                 key={event.name}
-                                onClick={() => showEvent(event.name)}
+                                onClick={() => showEvent(event.id)}
                                 style={{ cursor: 'pointer' }}
                             >
                                 {event.name}
@@ -122,7 +122,7 @@ function ListaEventos() {
                         {events.map((event) => (
                             <li
                                 key={event.name}
-                                onClick={() => showEvent(event.name)}
+                                onClick={() => showEvent(event.id)}
                                 style={{ cursor: 'pointer' }}
                             >
                                 {event.name}
