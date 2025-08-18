@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import './EditarPerfil.css';
 import { editar } from "../SVG";
 import { useCookies } from "react-cookie";
