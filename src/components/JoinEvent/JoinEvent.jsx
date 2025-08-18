@@ -2,10 +2,12 @@ import '../../constants';
 import './JoinEvent.css'; 
 import { useCookies } from "react-cookie";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function JoinEvent() {
     const [msg, setMsg] = useState("");
     const [error, setError] = useState("");
+    const naviget = useNavigate();
     const [cookies] = useCookies(["JWT"]);
     const [code, setCode] = useState("");
     const jwTCookie = cookies.JWT;
@@ -28,6 +30,9 @@ function JoinEvent() {
             if (!response.ok) throw new Error(await response.text());
             setMsg("¡Te has unido al evento!");
             setError("");
+            setTimeout(function () {
+              naviget("/");
+            }, 600);
         })
         .catch(async (err) => {
             setError(await err.message || "Error al unirse");
