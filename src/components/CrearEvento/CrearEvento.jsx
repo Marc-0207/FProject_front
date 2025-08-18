@@ -194,6 +194,11 @@ function CrearEvento() {
         <button className="btn-centro" onClick={añadirImagen}>Añadir Imagen</button>
 
 <div className="EventoFormContainer">
+  {
+    error !== "" ?
+    <span className="error">{error}</span> :
+    <span className="success">{msg}</span>
+  }
   <div className="column column-single">
     <p>Nombre del evento</p>
     <input

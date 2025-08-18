@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import './Login.css'
 import { useNavigate } from 'react-router-dom';
 import '../../constants'
-import { Cookies, useCookies } from 'react-cookie';
+import { useCookies } from 'react-cookie';
 
 function Login(){
     const [cookies, setCookie] = useCookies(['JWT']);
