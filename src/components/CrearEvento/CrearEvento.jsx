@@ -9,13 +9,14 @@ function CrearEvento() {
   const [preview, setPreview] = useState();
   const [date, setDate] = useState([""]);
   const [error, setError] = useState("");
+  const [id, setId] = useState(null);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [imgFile, setImgFile] = useState([null]);
   const [cookies] = useCookies(["JWT"]);
   const [msg, setMsg] = useState("");
   const [popup, setPopup] = useState(false);
-  const [link, setLink] = useState("");
+  const [link, setLink] = useState("");popup
   const naviget = useNavigate();
   const jwTCookie = cookies.JWT;
   const url = window.url;
@@ -93,7 +94,9 @@ function CrearEvento() {
       body: JSON.stringify(data)
     })
       .then(async (response) => {
-        if (!response.ok) throw new Error(await response.text());
+        console.log("Informacion: "+ await response.text());
+        if (!response.ok) throw new Error(await response.text());        
+        setId(response.json().id);
         await sendImage();
         if (!popup) setPopup(true);
       })
@@ -123,7 +126,7 @@ function CrearEvento() {
   }
 
   function getcode() {
-    const thirdEndpoint = url + "/event/" + name;
+    const thirdEndpoint = url + "/event/" + id;
     const thirdHeader = { 'JWT': jwTCookie };
 
     fetch(thirdEndpoint, {
@@ -131,7 +134,10 @@ function CrearEvento() {
       headers: thirdHeader,
     })
       .then((response) => {
+        
         if (!response.ok) throw new Error("Error en la respuesta");
+        let info = response.json();
+        setId(info.id)
         return response.json();
       })
       .then((data) => setLink(data.shareCode))

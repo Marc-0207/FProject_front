@@ -1,4 +1,6 @@
-/* NUEVO EVENTO - Título centrado */
+/* -----------------------------
+   TITULARES Y TEXTOS GENERALES
+----------------------------- */
 h1 {
   text-align: center;
   margin: 2rem 0 1rem;
@@ -8,86 +10,18 @@ h1 {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Botón Añadir Imagen centrado */
-.btn-centro {
-  user-select:none;
-  display: block;
-  margin: 0 auto 1.5rem auto;
-  padding: 0.5rem 1rem;
-  background-color: #2196f3;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
+p {
+  margin: 0;
   font-weight: 600;
-  transition: background-color 0.3s ease;
-  max-width: 150px;
+  color: #333;
+  font-size: 1rem;
+  width: 100%;
   text-align: center;
 }
 
-.btn-centro:hover {
-  background-color: #1976d2;
-}
-
-/* Input de archivo centrado (si lo usas) */
-input[type="file"] {
-  display: block;
-  margin: 0 auto 1.5rem;
-  font-size: 1rem;
-}
-
-/* Imagen previa - contenedor general */
-.EventoImagenRow {
-  display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-bottom: 1.5rem;
-}
-
-/* Contenedor individual de imagen */
-.EventoImagenContainer {
-  width: 120px;
-  height: 120px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 1rem;
-  position: relative;
-  cursor: pointer;
-}
-
-/* Imagen previa cargada - cuadrada */
-.EventoPreviewImage {
-  width: 120px;
-  height: 120px;
-  object-fit: cover;
-  border-radius: 8px !important;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s ease;
-}
-
-.EventoPreviewImage:hover {
-  transform: scale(1.05);
-}
-
-/* Placeholder cuadrado antes de subir imagen */
-.EventoPlaceholder {
-  width: 120px;
-  height: 120px;
-  border-radius: 8px;
-  background-color: #f0f0f0;
-  border: 2px dashed #ccc;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  transition: background-color 0.3s ease, border-color 0.3s ease;
-}
-
-.EventoPlaceholder:hover {
-  background-color: #eaeaea;
-  border-color: #999;
-}
-
-/* Formulario general */
+/* -----------------------------
+   FORMULARIO GENERAL
+----------------------------- */
 .EventoFormContainer {
   max-width: 700px;
   margin: 2rem auto;
@@ -95,15 +29,13 @@ input[type="file"] {
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-
-  /* Cambiamos grid a flex columna */
   display: flex;
   flex-direction: column;
   gap: 2rem;
   box-sizing: border-box;
+  text-align: center;
 }
 
-/* Nueva clase para columna única */
 .column-single {
   display: flex;
   flex-direction: column;
@@ -111,7 +43,6 @@ input[type="file"] {
   gap: 1rem;
 }
 
-/* Bloque Nombre del evento con input centrado y ancho */
 .nombre-evento {
   display: flex;
   flex-direction: column;
@@ -124,21 +55,11 @@ input[type="file"] {
   width: 80%;
   max-width: 400px;
   box-sizing: border-box;
-  margin: 0 auto;   /* Centrado horizontal */
-  display: block;   /* Para que margin auto funcione */
+  margin: 0 auto;
+  display: block;
 }
 
-/* Texto en el formulario */
-.EventoFormContainer p {
-  margin: 0;
-  font-weight: 600;
-  color: #333;
-  font-size: 1rem;
-  width: 100%;
-  text-align: center; /* Centrar el texto del label */
-}
-
-/* Inputs y textarea dentro de columnas */
+/* Inputs y textarea */
 .column-single input,
 .column-single textarea {
   width: 80%;
@@ -153,12 +74,12 @@ input[type="file"] {
   box-sizing: border-box;
 }
 
-/* Textarea específico */
 textarea {
   resize: vertical;
   min-height: 100px;
 }
 
+/* Inputs al enfocarse */
 .EventoNombre:focus,
 .Duracion:focus,
 .Calendario:focus,
@@ -168,18 +89,19 @@ textarea:focus {
   box-shadow: 0 0 8px rgba(33, 150, 243, 0.3);
 }
 
-/* Contenedor de fechas */
+/* -----------------------------
+   CALENDARIO Y FECHAS
+----------------------------- */
 .Fechas {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;  /* Más separación vertical */
+  gap: 1.5rem;
   border: 1px solid #eee;
   border-radius: 6px;
   padding: 1rem;
   background-color: #fafafa;
 }
 
-/* Título y botón en la misma línea */
 .FechasHeader {
   display: flex;
   justify-content: space-between;
@@ -189,7 +111,7 @@ textarea:focus {
 
 .FechasGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* mínimo 200px */
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 0.75rem 1rem;
   max-height: 300px;
   overflow-y: auto;
@@ -234,19 +156,85 @@ textarea:focus {
   transform: translateY(-1px);
 }
 
-.EventoError {
-  color: red;
-  font-size: 0.85rem;
-  margin-top: 0.5rem;
+/* -----------------------------
+   IMÁGENES Y PREVIEWS
+----------------------------- */
+input[type="file"] {
+  display: block;
+  margin: 0 auto 1.5rem;
+  font-size: 1rem;
 }
 
-.EventoSuccess {
-  color: green;
-  font-size: 0.85rem;
-  margin-top: 0.5rem;
+.EventoImagenRow {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 1.5rem;
 }
 
-/* Botón Crear Evento */
+.EventoImagenContainer {
+  width: 120px;
+  height: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1rem;
+  position: relative;
+  cursor: pointer;
+}
+
+.EventoPreviewImage {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 8px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.EventoPreviewImage:hover {
+  transform: scale(1.05);
+}
+
+.EventoPlaceholder {
+  width: 120px;
+  height: 120px;
+  border-radius: 8px;
+  background-color: #f0f0f0;
+  border: 2px dashed #ccc;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.EventoPlaceholder:hover {
+  background-color: #eaeaea;
+  border-color: #999;
+}
+
+/* -----------------------------
+   BOTONES
+----------------------------- */
+.btn-centro {
+  user-select: none;
+  display: block;
+  margin: 0 auto 1.5rem auto;
+  padding: 0.5rem 1rem;
+  background-color: #2196f3;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+  max-width: 150px;
+  text-align: center;
+}
+
+.btn-centro:hover {
+  background-color: #1976d2;
+}
+
 .CrearEvento {
   user-select: none;
   display: block;
@@ -270,12 +258,99 @@ textarea:focus {
   transform: translateY(-2px);
 }
 
-/* Responsive */
+/* -----------------------------
+   MENSAJES DE VALIDACIÓN
+----------------------------- */
+.EventoError {
+  color: red;
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+}
+
+.EventoSuccess {
+  color: green;
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+}
+
+/* -----------------------------
+   POPUP / MODAL
+----------------------------- */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.popup {
+  background-color: #fff;
+  padding: 2rem 3rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.popup p {
+  margin: 0.8rem 0;
+  color: #333;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.popup button {
+  margin: 0.8rem 0.5rem 0 0.5rem;
+  padding: 0.55rem 1.4rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.2s ease;
+  box-shadow: 0 3px 8px rgba(33, 150, 243, 0.4);
+  color: white;
+}
+
+.popup button:first-of-type {
+  background-color: #2196f3;
+}
+
+.popup button:first-of-type:hover {
+  background-color: #1976d2;
+  box-shadow: 0 4px 12px rgba(25, 118, 210, 0.6);
+}
+
+.popup button:last-of-type {
+  background-color: #f44336;
+}
+
+.popup button:last-of-type:hover {
+  background-color: #d32f2f;
+  box-shadow: 0 4px 12px rgba(211, 47, 47, 0.6);
+}
+
+/* -----------------------------
+   UTILIDADES
+----------------------------- */
+.NS {
+  user-select: none;
+}
+
+/* -----------------------------
+   RESPONSIVE
+----------------------------- */
 @media (max-width: 700px) {
   .EventoFormContainer {
-    display: flex;
-    flex-direction: column;
-    padding: 1rem;  /* Menor padding en móvil */
+    padding: 1rem;
   }
 
   .CrearEvento {
@@ -291,75 +366,4 @@ textarea:focus {
   .Fechas button {
     align-self: stretch;
   }
-}
-
-/* Overlay del popup: fondo oscuro semitransparente */
-.popup-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.6); /* más opaco para mejor legibilidad */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-}
-
-/* Popup principal */
-.popup {
-  background-color: #fff;
-  padding: 2rem 3rem;
-  border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
-  max-width: 400px;
-  width: 90%;
-  text-align: center;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-/* Texto dentro del popup */
-.popup p {
-  margin: 0.8rem 0;
-  color: #333;
-  font-weight: 600;
-  font-size: 1.1rem;
-}
-
-/* Botones del popup */
-.popup button {
-  margin: 0.8rem 0.5rem 0 0.5rem;
-  padding: 0.55rem 1.4rem;
-  font-size: 1rem;
-  font-weight: 600;
-  border-radius: 6px;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.3s ease, box-shadow 0.2s ease;
-  box-shadow: 0 3px 8px rgba(33, 150, 243, 0.4);
-  color: white;
-}
-
-/* Botón Copiar - color azul */
-.popup button:first-of-type {
-  background-color: #2196f3;
-}
-
-.popup button:first-of-type:hover {
-  background-color: #1976d2;
-  box-shadow: 0 4px 12px rgba(25, 118, 210, 0.6);
-}
-
-/* Botón Cerrar - color rojo */
-.popup button:last-of-type {
-  background-color: #f44336;
-}
-
-.popup button:last-of-type:hover {
-  background-color: #d32f2f;
-  box-shadow: 0 4px 12px rgba(211, 47, 47, 0.6);
-}
-.NS{
-  user-select:none;
 }
