@@ -24,7 +24,7 @@
 .EventosPersonales h1,
 .EventosParticipas h1 {
   font-size: 22px;
-  margin-bottom: 15px;
+  margin: 15px 0px;
   color: #2c3e50;
 }
 
@@ -49,6 +49,25 @@ li:hover {
   background-color: #dfe6e9;
   transform: scale(1.02);
 }
+/*Create and Join div*/
+.CJB {
+  user-select:none;
+  display: flex;
+  justify-content: space-around;
+}
+
+
+.CJB button{
+  flex: none;
+  margin: auto 0;
+  display: inline-block;
+  background-color: #3498db;
+  border: none;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
 
 /* Calendario */
 .Calendario {
@@ -56,7 +75,7 @@ li:hover {
   user-select:none;
 }
 
-.Calendario button {
+.Calendario button{
   padding: 12px 20px;
   background-color: #3498db;
   border: none;
@@ -65,9 +84,11 @@ li:hover {
   border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.2s ease;
+  
 }
 
-.Calendario button:hover {
+.Calendario button:hover,
+.CJB button:hover{
   background-color: #2980b9;
 }
 
