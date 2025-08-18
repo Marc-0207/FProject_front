@@ -3,21 +3,21 @@ import './CrearEvento.css';
 import '../../constants'
 import Compressor from 'compressorjs';
 import { Cookies, useCookies } from "react-cookie";
+import { useNavigate } from 'react-router-dom';
 
 function CrearEvento() {
-  const [files, setFiles] = useState();
   const [preview, setPreview] = useState();
   const [date, setDate] = useState([""]);
   const [error, setError] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [imgFile, setImgFile] = useState([null]);
-  const [cookies, setCookies] = useCookies(["JWT"]);
+  const [cookies] = useCookies(["JWT"]);
   const [msg, setMsg] = useState("");
   const [popup, setPopup] = useState(false);
   const [link, setLink] = useState("");
+  const naviget = useNavigate();
   const jwTCookie = cookies.JWT;
-  const fileInputRef = useRef(null);
   const url = window.url;
 
   useEffect(() => {
@@ -87,7 +87,7 @@ function convertToWebp(img) {
     }
   };
   function newEvent() {
-    if (!name || !description || date[0] === "" || imgFile.length === 0 || imgFile.every(f => !f)) {
+    if (!name || !description || date[0] === "") {
       setError("Algún campo está vacío");
       return;
     }
@@ -114,7 +114,11 @@ function convertToWebp(img) {
           sendImage();
           setTimeout(() => {
           }, 500);
+          if(!popup){
+            setPopup(true);
+          }
         })
+        
         .catch(async (err) => {
           setError(err.message)
         });
@@ -140,7 +144,9 @@ function convertToWebp(img) {
       })
         .then(async (response) => {
           if (!response.ok) throw new Error(await response.text());
-          setPopup(true);
+          if(!popup){
+            setPopup(true);
+          }
         })
         .catch((err) => setError(err.message));
     }
@@ -170,12 +176,27 @@ function convertToWebp(img) {
       setError(err.message);
   })
 }
-
   useEffect(() => {
     if (popup) {
       getcode();
     }
   }, [popup]);
+
+  function goback(){
+    setPopup(false)
+    naviget("/");
+  }
+
+  function copiar(){
+    navigator.clipboard.writeText(link)
+    .then(() =>{
+      setMsg("Link copiado")
+      setTimeout(() => setMsg(""), 2000)
+    })
+    .catch(err =>{
+      setMsg("Error al copiar")
+    })
+  }
 
   return (
     <>
@@ -253,9 +274,11 @@ function convertToWebp(img) {
         {popup && (
             <div className="popup-overlay">
               <div className="popup">
+                <p>{msg}</p>
                 <p>Evento Creado!!</p>
                 <p>Link: {link}</p> 
-                <button onClick={() => setPopup(false)}>Cerrar</button>
+                <button onClick={copiar}>Copiar</button>
+                <button onClick={goback}>Cerrar</button>
               </div>
             </div>
         )}
