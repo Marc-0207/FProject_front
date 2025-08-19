@@ -146,6 +146,23 @@ li:hover {
   background-color: #c0392b;
 }
 
+.popup-images{
+  display: inline-block;
+  border-radius: 0;
+}
+
+.popup-images:first-child{
+  border-radius: 6px 0px 0px 6px;
+}
+.popup-images:last-child{
+  border-radius: 0px 6px 6px 0px;
+}
+
+.popup-images-list{
+  border-radius: 6px;
+}
+
+
 /* Animación de aparición */
 @keyframes fadeIn {
   from {
