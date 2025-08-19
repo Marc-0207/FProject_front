@@ -16,6 +16,7 @@
 
 /* Título */
 h1 {
+  user-select:none;
   text-align: center;
   margin-top: 2rem;
   font-size: 2rem;
@@ -45,6 +46,7 @@ h1 {
 
 /* Botón */
 .Register {
+  user-select:none;
   width: 100%;
   padding: 0.75rem;
   background-color: #2196f3;

@@ -16,17 +16,14 @@ function VoteElection({ election }) {
             },
         })
             .then(async (response) => {
-                console.log(jwTCookie)
-                console.log(response.status);
-                console.log(response.text);
                 if (!response.ok) throw new Error(await response.text());
                 if(!hasVoted){
-                    setLocalCount(prevCount => prevCount + 1);
                     setHasVoted(true)
+                    setLocalCount(prevCount => prevCount + 1);    
                 }
                 else{
-                    setLocalCount(prevCount => prevCount - 1);
                     setHasVoted(false)  
+                    setLocalCount(prevCount => prevCount - 1); 
                 }
             })
             .catch((err) => console.log(err.message));

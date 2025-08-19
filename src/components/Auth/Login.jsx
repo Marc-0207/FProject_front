@@ -3,8 +3,11 @@ import './Login.css'
 import { useNavigate } from 'react-router-dom';
 import '../../constants'
 import { useCookies } from 'react-cookie';
+import { ojoabierto, ojocerrado} from "../SVG";
+
 
 function Login(){
+    const [showPassword, setShowPassword] = useState(false);
     const [cookies, setCookie] = useCookies(['JWT']);
     const naviget = useNavigate();
     const [email, setUser] = useState("");
@@ -70,7 +73,7 @@ function Login(){
     }
     return(
         <>
-            <h1>Iniciar sesión</h1>
+            <h1 className='IniciarSesion'>Iniciar sesión</h1>
             <div className="Credenciales">
                 <p>
                     {
@@ -80,7 +83,12 @@ function Login(){
                     }
                 </p>
                 <input className="Email" placeholder="Email" value={email} onChange={(e) => handleInputChange(e, "email")}></input>
-                <input className="Password" placeholder="Contraseña" type="password" value={password} onChange={(e) => handleInputChange(e, "password")}></input>
+                    <div className="PasswordField">
+                        <input className="Password" placeholder="Contraseña" type={showPassword ? "text" : "password"}value={password}onChange={(e) => handleInputChange(e, "password")}/>
+                        <span className="TogglePassword" onClick={() => setShowPassword(!showPassword)}>
+                            {showPassword ? ojoabierto : ojocerrado}
+                        </span>
+                    </div>
                 <button className="Login" onClick={loginSubmit}>Iniciar sesión</button>
                 <p className='forgot'>Has olvidado tu contraseña?</p>
             </div>

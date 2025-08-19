@@ -2,8 +2,11 @@ import "./Register.css";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import '../../constants'
+import { ojoabierto, ojocerrado} from "../SVG";
 
 function Register() {
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword2, setShowPassword2] = useState(false);
   const navigate = useNavigate();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -153,20 +156,18 @@ function Register() {
           value={email}
           onChange={(e) => handleInputChange(e, "email")}
         />
-        <input
-          className="Password"
-          type="password"
-          placeholder="Contraseña"
-          value={password}
-          onChange={(e) => handleInputChange(e, "password")}
-        />
-        <input
-          className="Password2"
-          type="password"
-          placeholder="Repetir contraseña"
-          value={password2}
-          onChange={(e) => handleInputChange(e, "password2")}
-        />
+          <div className="PasswordField">
+              <input className="Password" placeholder="Contraseña" type={showPassword ? "text" : "password"}value={password}onChange={(e) => handleInputChange(e, "password")}/>
+              <span className="TogglePassword" onClick={() => setShowPassword(!showPassword)}>
+                  {showPassword ? ojoabierto : ojocerrado}
+              </span>
+          </div>
+            <div className="PasswordField">
+                <input className="Password2" placeholder="Repetir Contraseña" type={showPassword2 ? "text" : "password"}value={password2}onChange={(e) => handleInputChange(e, "password2")}/>
+                <span className="TogglePassword" onClick={() => setShowPassword2(!showPassword2)}>
+                    {showPassword2 ? ojoabierto : ojocerrado}
+                </span>
+            </div>
         <button className="Register" onClick={handleSubmit}>
           Registrarse
         </button>
