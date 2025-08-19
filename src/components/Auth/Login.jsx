@@ -66,9 +66,12 @@ function Login(){
                     naviget("/");
                 }, 500);
             }).catch(async (err) => {
-                setError(err.message);
+                setError("El usuario o la contraseña son incorrectos");
                 
             })
+        }
+        else{
+            setError("Tienes algún campo mal!")
         }
     }
     return(

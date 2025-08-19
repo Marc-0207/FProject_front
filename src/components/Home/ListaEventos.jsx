@@ -182,7 +182,7 @@ function ListaEventos() {
                 selectedEvent.elections.length > 0 ? (
                   <ul className="Voto">
                     {selectedEvent.elections.map((election) => (
-                      <VoteElection election={election}/>
+                      <VoteElection election={election} key={election.id}/>
                     ))}
                   </ul>
                 ) : (

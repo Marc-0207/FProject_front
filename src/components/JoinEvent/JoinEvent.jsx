@@ -35,7 +35,7 @@ function JoinEvent() {
             }, 600);
         })
         .catch(async (err) => {
-            setError(await err.message || "Error al unirse");
+            setError("Error al unirse");
             setMsg("");
         });
     }

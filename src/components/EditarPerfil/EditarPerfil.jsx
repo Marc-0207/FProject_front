@@ -70,7 +70,7 @@ function EditarPerfil() {
           naviget("/");
         }, 1000)
       })
-      .catch(err => setError("Error: " + err.message));
+      .catch(err => setError("No has cambiado tu nombre"));
   }
 
   return (
