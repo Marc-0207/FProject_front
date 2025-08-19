@@ -94,17 +94,24 @@ function CrearEvento() {
       body: JSON.stringify(data)
     })
       .then(async (response) => {
-        console.log("Informacion: "+ await response.text());
-        if (!response.ok) throw new Error(await response.text());        
-        setId(response.json().id);
-        await sendImage();
+        //console.log("Informacion: "+ await response.text());
+        if (!response.ok) throw new Error(await response.text());
+        
+        let eventInfo = await response.json();
+        console.log(eventInfo.id);
+        console.log(eventInfo.shareCode);
+
+        setId(eventInfo.id);
+        setLink(eventInfo.shareCode);
+
+        await sendImage(eventInfo.id);
         if (!popup) setPopup(true);
       })
       .catch(err => setError(err.message));
   }
 
-  async function sendImage() {
-    const secondEndpoint = url + "/image/" + name;
+  async function sendImage(localId) {
+    const secondEndpoint = url + "/image/" + localId;
     const secondHeaders = { 'JWT': jwTCookie };
 
     for (let file of imgFile) {
@@ -124,29 +131,6 @@ function CrearEvento() {
         .catch((err) => setError(err.message));
     }
   }
-
-  function getcode() {
-    const thirdEndpoint = url + "/event/" + id;
-    const thirdHeader = { 'JWT': jwTCookie };
-
-    fetch(thirdEndpoint, {
-      method: "GET",
-      headers: thirdHeader,
-    })
-      .then((response) => {
-        
-        if (!response.ok) throw new Error("Error en la respuesta");
-        let info = response.json();
-        setId(info.id)
-        return response.json();
-      })
-      .then((data) => setLink(data.shareCode))
-      .catch((err) => setError(err.message));
-  }
-
-  useEffect(() => {
-    if (popup) getcode();
-  }, [popup]);
 
   function goback() {
     setPopup(false);
