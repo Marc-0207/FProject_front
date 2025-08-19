@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { Cookies, useCookies } from "react-cookie";
 import {
   calendario,
-  notificacion,
   eventos,
   ajustes,
   desplegable,
@@ -12,14 +11,15 @@ import {
   logout,
 } from "../SVG";
 import "./Sidebar.css";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 
-const Sidebar = ({ isOpen, setIsOpen }) => {
-  let naviget = useNavigate();
+const Sidebar = ({ isOpen, setIsOpen })=> {
+  const naviget = useNavigate();
   const [cookies, , removeCookie] = useCookies(["JWT"]);
+  const sidebarRef = useRef(null);
+
   function logoutSubmit() {
     removeCookie("JWT", { path: "/" });
-    console.log(cookies);
     naviget("/welcome");
   }
 
@@ -30,6 +30,20 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
   const toggleDropdown = (index) => {
     setActiveDropdown(activeDropdown === index ? null : index);
   };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+        setIsOpen(false);
+        setActiveDropdown(null);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [setIsOpen]);
 
   const navItems = [
     {
@@ -57,9 +71,9 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
   ];
 
   return (
-    <div className={`sidebar ${!isOpen ? "active" : "closed"}`}>
+    <div ref={sidebarRef} className={`sidebar ${isOpen ? "active" : ""}`}>
       <button onClick={() => setIsOpen(!isOpen)}>
-        {isOpen ? menu : cerrar}
+        {isOpen ? cerrar : menu}
       </button>
 
       <nav className="Opciones">

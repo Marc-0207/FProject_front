@@ -12,14 +12,14 @@ header {
   box-sizing: border-box;
   background-color: white;
   z-index: 1000;
-  position: relative; /* Para que el sidebar se posicione con respecto al header */
+  position: relative;
 }
 
 .menu-logo {
   display: flex;
   align-items: center;
   gap: 1rem;
-  position: relative; /* Para que el menú del sidebar se posicione respecto aquí */
+  position: relative;
 }
 
 .perfil {
@@ -27,20 +27,20 @@ header {
   align-items: center;
 }
 
-/* Contenedor general del sidebar */
+/* Sidebar */
 .sidebar {
-  position: relative; /* Para que las opciones se posicionen respecto al sidebar */
-  margin-left: 1rem; /* Separación desde el logo o contenido a la izquierda */
-  box-shadow: none; /* Opcional, para que no sobresalga con sombra fuera del header */
+  position: relative;
+  margin-left: 1rem;
   border-radius: 8px;
-  background-color: transparent; /* Toma el fondo del header */
+  background-color: transparent;
   padding: 0;
   display: flex;
   align-items: center;
-  z-index: 1010; /* Más alto que el header */
+  z-index: 1010;
+  outline: none; /* elimina contorno azul al enfocar */
 }
 
-/* Solo mostrar el botón principal */
+/* Botón del menú */
 .sidebar > button {
   background: #4a90e2;
   border: none;
@@ -52,7 +52,7 @@ header {
   gap: 0.5rem;
   padding: 0.3rem 0.8rem;
   border-radius: 6px;
-  box-shadow: none; /* Menos sombra para que no se vea raro dentro del header */
+  box-shadow: none;
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -61,11 +61,11 @@ header {
   box-shadow: 0 5px 15px rgba(53, 122, 189, 0.6);
 }
 
-/* Contenedor para las opciones desplegables, inicialmente oculto */
+/* Menú desplegable (oculto por defecto) */
 .Opciones {
   display: none;
   position: absolute;
-  top: 100%; /* Justo debajo del botón */
+  top: 100%; /* debajo del botón */
   left: 0;
   background-color: #ffffff;
   border: 1px solid #e0e0e0;
@@ -74,16 +74,16 @@ header {
   padding: 0.5rem 0;
   min-width: 220px;
   flex-direction: column;
-  z-index: 1100; /* Más alto que el header */
+  z-index: 1100;
   animation: dropdownFadeIn 0.25s ease forwards;
 }
 
-/* Mostrar opciones cuando el sidebar tenga la clase 'active' */
+/* Mostrar menú cuando el sidebar o sus hijos tienen el foco */
 .sidebar.active .Opciones {
   display: flex;
 }
 
-/* Animación suave para desplegable */
+/* Animación suave */
 @keyframes dropdownFadeIn {
   from {
     opacity: 0;
@@ -95,7 +95,7 @@ header {
   }
 }
 
-/* Cada ítem del menú */
+/* Ítems del menú */
 .menu-item {
   padding: 0.6rem 1.5rem;
   cursor: pointer;
@@ -116,7 +116,6 @@ header {
   border-left-color: #4a90e2;
 }
 
-/* Iconos en menú */
 .menu-item svg {
   margin: 0;
   flex-shrink: 0;
@@ -128,7 +127,7 @@ header {
   fill: #4a90e2;
 }
 
-/* Botón cerrar sesión */
+/* Logout */
 .logout-item {
   color: #d32f2f;
   font-weight: 600;
