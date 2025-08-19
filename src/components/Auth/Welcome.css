@@ -1,10 +1,13 @@
-.features img{
-  width: 300px;
-  background-color: red;
-  height: 200px;
+.features img, video{
+/*   width: 300px;
+  background-color: red; */
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  height: 250px;
   margin: 0;
   display: block;
 }
+
 #welcome-title{
   font-size: 3rem!important;
   margin-bottom: 70px;
@@ -20,29 +23,46 @@
   justify-content: space-between;
 }
 
+
 .auth-buttons a{
 display: block;
 padding: 10px 20px;
-border: 2px black solid;
+border: 2px solid #2196f3;
 border-radius: 8px;
+box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+box-sizing: border-box;
+transition: all 0.2s ease;
+}
+.auth-buttons a:hover{
+  border-color: transparent;
+  background-color: #2196f3;
+  color: white;
+  box-sizing: border-box;
 }
 
 .features{
   display: flex;
   flex-direction: column;
   gap: 100px;
+  margin-bottom: 120px;
 }
 .features>div{
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   gap: 30px;
+  align-items: center;
 }
 .features>div:nth-child(odd){
   flex-direction: row;
 }
 .features>div:nth-child(even) {
   flex-direction: row-reverse;
+}
+
+.features h1{
+  margin: 0;
+  max-width: 50%;
 }
 
 .logo-welcome{
