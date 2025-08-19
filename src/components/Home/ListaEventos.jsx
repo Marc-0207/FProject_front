@@ -200,7 +200,10 @@ function ListaEventos() {
                   <strong className="SS">{selectedEvent.shareCode}</strong>
                 </p>
               )}
-              <button onClick={() => setSelectedEvent(null)}>Cerrar</button>
+              <button onClick={() => {
+                setSelectedEvent(null);
+                
+              }}>Cerrar</button>
             </div>
           </div>
         )}

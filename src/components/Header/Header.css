@@ -16,6 +16,7 @@ header {
 
 /* Contenedor del logo y el sidebar */
 .menu-logo {
+  user-select:none;
   display: flex;
   align-items: center;
   gap: 1rem;
