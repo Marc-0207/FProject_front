@@ -1,4 +1,7 @@
 import { Link } from "react-router-dom";
+import image1 from "../../assets/capture-welcome-1.png";
+import image2 from "../../assets/capture-welcome-2.png";
+import video1 from "../../assets/video.mp4";
 import "./Welcome.css";
 function Welcome() {
   return (
@@ -14,22 +17,23 @@ function Welcome() {
       </div>
       <section className="features">
         <div>
-          <h2>
-            jaksjkklnxlznxcnscnzlkxncls <br /> asjasajskjaskbdhsa
-          </h2>
-          <img src="" alt="" srcSet="" />
+          <h1>
+            Crea un evento <br/> o únete a uno
+          </h1>
+          <video src={video1} autoPlay loop muted/>
         </div>
         <div>
-          <h2>
-            jaksjkklnxlznxcnscnzlkxncls <br /> asjasajskjaskbdhsa
-          </h2>
-          <img src="" alt="" srcSet="" />
+          <h1>
+            Añade fácilmente a tus invitados
+            con el link de invitación
+          </h1>
+          <img src={image2} alt="" srcSet="" />
         </div>
         <div>
-          <h2>
-            jaksjkklnxlznxcnscnzlkxncls <br /> asjasajskjaskbdhsa
-          </h2>
-          <img src="" alt="" srcSet="" />
+          <h1>
+            Vota por el día <br /> que te vaya mejor
+          </h1>
+          <img src={image1} alt="" srcSet="" />
         </div>
       </section>
     </div>
