@@ -178,5 +178,5 @@ li:hover {
   user-select:none;
 }
 .SS{
-  user-select:all;
+  user-select:text;
 }
