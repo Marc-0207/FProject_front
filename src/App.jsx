@@ -14,16 +14,22 @@ function App() {
       {location.pathname == "/welcome" ||
       location.pathname == "/login" ||
       location.pathname == "/register" ? (
+        <>
         <div>
           <img src={logo} alt="" className="logo-welcome" />
         </div>
-      ) : (
-        <Header />
-      )}
-
-      <div id="page-container">
+        <div id="page-container" >
         <Outlet />
       </div>
+      </>
+      ) : (
+        <>
+        <Header />
+        <div id="page-container" className='bgc'>
+        <Outlet />
+        </div>
+        </>
+      )}
       <Footer />
     </>
   );
