@@ -70,7 +70,7 @@ function Login(){
     }
     return(
         <>
-            <h1>Login</h1>
+            <h1>Iniciar sesión</h1>
             <div className="Credenciales">
                 <p>
                     {
@@ -80,9 +80,9 @@ function Login(){
                     }
                 </p>
                 <input className="Email" placeholder="Email" value={email} onChange={(e) => handleInputChange(e, "email")}></input>
-                <input className="Password" placeholder="Password" type="password" value={password} onChange={(e) => handleInputChange(e, "password")}></input>
-                <button className="Login" onClick={loginSubmit}>Login</button>
-                <p className='forgot'>Forgot password?</p>
+                <input className="Password" placeholder="Contraseña" type="password" value={password} onChange={(e) => handleInputChange(e, "password")}></input>
+                <button className="Login" onClick={loginSubmit}>Iniciar sesión</button>
+                <p className='forgot'>Has olvidado tu contraseña?</p>
             </div>
         </>
     )

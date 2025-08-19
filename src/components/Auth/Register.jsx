@@ -132,7 +132,7 @@ function Register() {
 
   return (
     <>
-      <h1>Register</h1>
+      <h1>Registrarse</h1>
       <div className="Credenciales">
         <p>
           {msg !== "" ? (
@@ -168,7 +168,7 @@ function Register() {
           onChange={(e) => handleInputChange(e, "password2")}
         />
         <button className="Register" onClick={handleSubmit}>
-          Register
+          Registrarse
         </button>
       </div>
     </>
