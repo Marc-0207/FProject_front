@@ -18,7 +18,6 @@ export default function Footer() {
           <div className="footer-links-container hide">
             <div className="footer-links">
               <Link to={"/"}>Mis eventos</Link>
-              <Link to={"/calendario"}>Calendario</Link>
               <Link to={"/crearevento"}>Crear evento</Link>
               <Link to={"/joinevent"}>Unirse a un evento</Link>
             </div>
@@ -27,7 +26,6 @@ export default function Footer() {
           <div className="footer-links-container">
             <div className="footer-links">
               <Link to={"/"}>Mis eventos</Link>
-              <Link to={"/calendario"}>Calendario</Link>
               <Link to={"/crearevento"}>Crear evento</Link>
               <Link to={"/joinevent"}>Unirse a un evento</Link>
             </div>

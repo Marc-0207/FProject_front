@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { Cookies, useCookies } from "react-cookie";
 import {
-  calendario,
   eventos,
   ajustes,
   desplegable,
@@ -13,7 +12,8 @@ import {
 import "./Sidebar.css";
 import { useState, useEffect, useRef } from "react";
 
-const Sidebar = ({ isOpen, setIsOpen })=> {
+function Sidebar()  {
+  const [ isOpen, setIsOpen]  = useState(false)
   const naviget = useNavigate();
   const [cookies, , removeCookie] = useCookies(["JWT"]);
   const sidebarRef = useRef(null);
@@ -50,12 +50,6 @@ const Sidebar = ({ isOpen, setIsOpen })=> {
       title: "Mis eventos",
       path: "/",
       icon: eventos,
-      hasDropdown: false,
-    },
-    {
-      title: "Calendario",
-      path: "/calendario",
-      icon: calendario,
       hasDropdown: false,
     },
     {

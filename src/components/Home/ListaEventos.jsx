@@ -141,11 +141,6 @@ function ListaEventos() {
               ))}
             </ul>
           </div>
-          <div className="Calendario">
-            <button onClick={() => navigate("/calendario")}>
-              Ver calendario
-            </button>
-          </div>
         </div>
 
         {selectedEvent && (
