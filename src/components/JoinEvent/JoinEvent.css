@@ -3,8 +3,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    background-color: #f0f2f5;
+    margin: 50px;
+    /* height: 100vh; */
+    /* background-color: #f0f2f5; */
 }
 
 .join-event-box {
@@ -37,6 +38,7 @@
     margin-bottom: 20px;
     font-size: 16px;
     transition: border-color 0.2s;
+    box-sizing: border-box;
 }
 
 .join-event-box input:focus {

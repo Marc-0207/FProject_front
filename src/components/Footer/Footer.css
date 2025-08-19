@@ -4,7 +4,7 @@
   padding: 30px 40px;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  background-color: gainsboro;
+  /* background-color: gainsboro; */
   box-sizing: border-box;
   position: static;
   bottom: 0;
@@ -34,8 +34,8 @@ h4{
   flex-direction: row;
 }
 .footer a:hover{
-  color: whitesmoke;
-  transition: color 0.1s ease;
+  color: #2196f3;
+  transition: color 0.2s ease;
 }
 .footer a{
   color: black;

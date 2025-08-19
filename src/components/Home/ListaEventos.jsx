@@ -111,7 +111,10 @@ function ListaEventos() {
               </button>
             </div>
             <ul className="NS">
-              {myevents.map((event) => (
+                {
+                !myevents.length ? <span>Aún no has creado ningún evento</span> :
+                
+              myevents.map((event) => (
                 <li
                   key={event.name}
                   onClick={() => showEvent(event.id)}
@@ -130,7 +133,10 @@ function ListaEventos() {
               </button>
             </div>
             <ul className="NS">
-              {events.map((event) => (
+                {
+                   !events.length ? <span>Aún no te has unido a ningún evento</span> :
+                
+              events.map((event) => (
                 <li
                   key={event.name}
                   onClick={() => showEvent(event.id)}
