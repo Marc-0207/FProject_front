@@ -174,9 +174,9 @@ function ListaEventos() {
                 <strong>Votos:</strong>
                 {selectedEvent.elections &&
                 selectedEvent.elections.length > 0 ? (
-                  <ul>
+                  <ul className="Voto">
                     {selectedEvent.elections.map((election) => (
-                      <VoteElection election={election} />
+                      <VoteElection election={election}/>
                     ))}
                   </ul>
                 ) : (

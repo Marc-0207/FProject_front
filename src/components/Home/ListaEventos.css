@@ -180,3 +180,9 @@ li:hover {
 .SS{
   user-select:text;
 }
+
+
+.Voto.active {
+  background-color: rgb(64, 255, 47);
+  opacity: 90%;
+}

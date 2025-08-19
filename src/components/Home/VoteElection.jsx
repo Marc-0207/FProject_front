@@ -33,9 +33,13 @@ function VoteElection({ election }) {
     }
 
     return (
-        <li onClick={handleClick}>
+        <li
+            className={`Voto ${hasVoted ? 'active' : ''}`}
+            onClick={handleClick}
+        >
             Fecha: {election.date}, Votos: {localCount}
         </li>
+
     );
 }
 

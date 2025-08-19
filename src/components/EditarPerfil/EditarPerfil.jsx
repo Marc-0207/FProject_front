@@ -5,8 +5,8 @@ import { useCookies } from "react-cookie";
 import { useNavigate } from 'react-router-dom';
 
 function EditarPerfil() {
-  const [preview, setPreview] = useState();
   const [name, setName] = useState("");
+  const [email, setEmail] = useState("")
   const [error, setError] = useState("");
   const [isEditingName, setIsEditingName] = useState(false);
   const [cookies] = useCookies(["JWT"]);
@@ -25,8 +25,9 @@ function EditarPerfil() {
         return res.json();
       })
       .then(data => {
+        console.log(data)
         setName(data.name);
-        setPreview(data.imageUrl);
+        setEmail(data.email);
       })
       .catch(err => setError(err.message));
   }, [url, jwTCookie]);
@@ -44,7 +45,7 @@ function EditarPerfil() {
 
   function save() {
     if (!name) {
-      setError("Algún campo está vacío");
+      setError("Nombre vacío");
       return;
     }
 
@@ -95,6 +96,8 @@ function EditarPerfil() {
             </div>
           )}
         </div>
+        <p>Correo electrónico</p>
+          <p>{email}</p>
       </div>
 
       <button className="Guardar" onClick={save}>Guardar</button>
