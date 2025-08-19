@@ -101,95 +101,109 @@ function ListaEventos() {
             });
     }
     return (
-        <>
-            <div className="ListaEventos">
-                <div className="EventosPersonales">
-                    <div className='CJB' >
-                        <h1>Eventos creados por ti</h1>
-                        <button onClick={() => navigate('/crearevento')}>
-                            Crear evento
-                        </button>
-                    </div>
-                    <ul className='NS'>
-                        {myevents.map((event) => (
-                            <li
-                                key={event.name}
-                                onClick={() => showEvent(event.id)}
-                                style={{ cursor: 'pointer' }}
-                            >
-                                {event.name}
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-                <div className="EventosParticipas">
-                <div className='CJB' >
-                    <h1 className='NS'>Eventos en los que participas</h1>
-                    <button onClick={() => navigate('/joinevent')}>
-                            Unirse a evento
-                        </button>
-                </div>
-                    <ul className='NS'>
-                        {events.map((event) => (
-                            <li
-                                key={event.name}
-                                onClick={() => showEvent(event.id)}
-                                style={{ cursor: 'pointer' }}
-                            >
-                                {event.name}
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-                <div className="Calendario">
-                    <button onClick={() => navigate('/calendario')}>Ver calendario</button>
-                </div>
+      <>
+        <div className="ListaEventos">
+          <div className="EventosPersonales">
+            <div className="CJB">
+              <h1>Eventos creados por ti</h1>
+              <button onClick={() => navigate("/crearevento")}>
+                Crear evento
+              </button>
             </div>
+            <ul className="NS">
+              {myevents.map((event) => (
+                <li
+                  key={event.name}
+                  onClick={() => showEvent(event.id)}
+                  style={{ cursor: "pointer" }}
+                >
+                  {event.name}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="EventosParticipas">
+            <div className="CJB">
+              <h1 className="NS">Eventos en los que participas</h1>
+              <button onClick={() => navigate("/joinevent")}>
+                Unirse a evento
+              </button>
+            </div>
+            <ul className="NS">
+              {events.map((event) => (
+                <li
+                  key={event.name}
+                  onClick={() => showEvent(event.id)}
+                  style={{ cursor: "pointer" }}
+                >
+                  {event.name}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="Calendario">
+            <button onClick={() => navigate("/calendario")}>
+              Ver calendario
+            </button>
+          </div>
+        </div>
 
-            {selectedEvent && (
-                <div className="popup-overlay">
-                    <div className="popup-box">
-                        <h2>{selectedEvent.name}</h2>
-                        <p><strong>Descripción:</strong> {selectedEvent.description}</p>
-                        <div>
-                            <strong>Fotos:</strong>
-                            {imageUrls.length > 0 ? (
-                                <ul>
-                                    {imageUrls.map((src, idx) => (
-                                        <li key={idx}>
-                                            <img src={src} width={100} height={100} loading='eager' />
-                                        </li>
-                                    ))}
-                                </ul>
-                            ) : (
-                                <p>No hay imágenes</p>
-                            )}
-                        </div>
+        {selectedEvent && (
+          <div className="popup-overlay">
+            <div className="popup-box">
+              <h2>{selectedEvent.name}</h2>
+              <p>
+                <strong>Descripción:</strong> {selectedEvent.description}
+              </p>
+              <div>
+                <strong>Fotos:</strong>
+                {imageUrls.length > 0 ? (
+                  <ul className='popup-images-list'>
+                    {imageUrls.map((src, idx) => (
+                      <li key={idx} className="popup-images">
+                        <img
+                          src={src}
+                          width={100}
+                          height={100}
+                          loading="eager"
+                        />
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p>No hay imágenes</p>
+                )}
+              </div>
 
-                        <div>
-                            <strong>Votos:</strong>
-                            {selectedEvent.elections && selectedEvent.elections.length > 0 ? (
-                                <ul>
-                                    {selectedEvent.elections.map((election) => (
-                                        <VoteElection election = {election}/>
-                                    ))}
-                                </ul>
-                            ) : (
-                                <p>No hay elecciones</p>
-                            )}
-                        </div>
+              <div>
+                <strong>Votos:</strong>
+                {selectedEvent.elections &&
+                selectedEvent.elections.length > 0 ? (
+                  <ul>
+                    {selectedEvent.elections.map((election) => (
+                      <VoteElection election={election} />
+                    ))}
+                  </ul>
+                ) : (
+                  <p>No hay elecciones</p>
+                )}
+              </div>
 
-                        <p><strong>Invitados:</strong> {selectedEvent.members ? selectedEvent.members.length : 0}</p>
-                        {selectedEvent.shareCode && (
-                            <p>
-                                Código evento: <strong className="SS">{selectedEvent.shareCode}</strong>
-                            </p>
-                            )}
-                        <button onClick={() => setSelectedEvent(null)}>Cerrar</button>
-                    </div>
-                </div>
-            )}
-        </>
+              <p>
+                <strong>Invitados:</strong>{" "}
+                {selectedEvent.members ? selectedEvent.members.length : 0}
+              </p>
+              {selectedEvent.shareCode && (
+                <p>
+                  Código evento:{" "}
+                  <strong className="SS">{selectedEvent.shareCode}</strong>
+                </p>
+              )}
+              <button onClick={() => setSelectedEvent(null)}>Cerrar</button>
+            </div>
+          </div>
+        )}
+      </>
     );
 }
 
