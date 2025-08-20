@@ -237,7 +237,7 @@ function CrearEvento() {
           <div className="popup">
             <p>{msg}</p>
             <p>Evento Creado!!</p>
-            <p>Link: {link}</p>
+            <p>Código: {link}</p>
             <button onClick={copiar}>Copiar</button>
             <button onClick={goback}>Cerrar</button>
           </div>
