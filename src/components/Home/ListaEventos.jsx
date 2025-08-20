@@ -100,6 +100,31 @@ function ListaEventos() {
                 setError(err.message);
             });
     }
+
+    function deleteEvent(localId) {
+      console.log("Borrar evento: "+localId);
+      const eventUrl = url + "/event/delete/" + localId;
+        fetch(eventUrl, {
+            method: 'DELETE',
+            headers: {
+                'JWT': jwTCookie,
+            }
+        })
+        .then((response) => {
+          setError("prueba");
+            if (!response.ok) throw new Error("Error en la respuesta");
+            myevents.map((event, index) => {
+              if (event.id == localId)
+                myevents.splice(index,1);
+            });
+            setSelectedEvent(null);
+        })
+        .catch((err) => {
+            setError(err.message);
+            setSelectedEvent(null);
+        });
+    }
+
     return (
       <>
         <div className="ListaEventos">
@@ -200,10 +225,16 @@ function ListaEventos() {
                   <strong className="SS">{selectedEvent.shareCode}</strong>
                 </p>
               )}
-              <button onClick={() => {
+              <div className='button-group'>
+                <button onClick={() => {
                 setSelectedEvent(null);
                 
               }}>Cerrar</button>
+
+              <button onClick={() => {
+                deleteEvent(selectedEvent.id);
+              }}>Borrar</button>
+              </div>
             </div>
           </div>
         )}
