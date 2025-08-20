@@ -230,10 +230,13 @@ function ListaEventos() {
                 setSelectedEvent(null);
                 
               }}>Cerrar</button>
-
-              <button onClick={() => {
-                deleteEvent(selectedEvent.id);
-              }}>Borrar</button>
+              {selectedEvent.shareCode != null ?                 
+                <button onClick={() => {
+                  deleteEvent(selectedEvent.id);
+                }}>Borrar</button>
+                :
+              <p></p>
+              }
               </div>
             </div>
           </div>
