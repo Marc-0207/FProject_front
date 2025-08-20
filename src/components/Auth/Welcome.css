@@ -18,6 +18,7 @@
   flex-direction: column;
 }
 .auth-buttons{
+  user-select: none;
   display: flex;
   margin: 0 120px;
   justify-content: space-between;
